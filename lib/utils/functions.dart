@@ -175,3 +175,9 @@ void hideStatusBar() {
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light));
 }
+
+String toCapitalize(String text) {
+  String firstChar = text[0].toUpperCase();
+  String rest = text.substring(1);
+  return firstChar + rest;
+}

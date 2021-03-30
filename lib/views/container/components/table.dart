@@ -1,5 +1,5 @@
-import 'package:cuts/views/home/components/home_header.dart';
-import 'package:cuts/views/home/components/titleButton.dart';
+import 'package:cuts/views/container/components/container_header.dart';
+import 'package:cuts/views/container/components/titleButton.dart';
 import 'package:flutter/material.dart';
 import 'package:cuts/api/api_models.dart';
 

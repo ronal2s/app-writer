@@ -1,4 +1,3 @@
-import 'package:cuts/utils/const.dart';
 import 'package:flutter/material.dart';
 
 class TitleWelcome extends StatelessWidget {

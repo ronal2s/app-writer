@@ -1,4 +1,4 @@
-import 'package:cuts/views/home/home.view.dart';
+import 'package:cuts/views/container/container.view.dart';
 import 'package:cuts/views/welcome/form_welcome.dart';
 import 'package:cuts/views/welcome/lottie_welcome.dart';
 import 'package:cuts/widgets/rounded_button.dart';
@@ -20,7 +20,7 @@ class _WelcomeViewState extends State<WelcomeView> {
   }
 
   void onSignIn() {
-    replaceView(context, view: HomeView());
+    replaceView(context, view: ContainerView());
   }
 
   @override

@@ -1,11 +1,12 @@
-import 'package:cuts/views/home/home.view.dart';
+import 'package:cuts/views/container/container.view.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:cuts/controllers/user.controller.dart';
 import 'package:cuts/utils/const.dart';
 import 'package:cuts/views/welcome/welcome.view.dart';
 
-void main() => runApp(MultiProvider(
+void main() => initializeDateFormatting().then((value) => runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
@@ -14,7 +15,7 @@ void main() => runApp(MultiProvider(
         initialRoute: "/",
         routes: {
           "/": (context) => WelcomeView(),
-          "/home": (context) => HomeView(),
+          "/home": (context) => ContainerView(),
         },
         theme: ThemeData(
             primaryColor: PRIMARY_COLOR,
@@ -39,9 +40,14 @@ void main() => runApp(MultiProvider(
               buttonColor: PRIMARY_COLOR,
               textTheme: ButtonTextTheme.primary,
             ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+              ),
+            ),
             dividerTheme: DividerThemeData(
               color: Colors.grey[800],
               space: 50,
             )),
       ),
-    ));
+    )));

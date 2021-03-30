@@ -1,8 +1,9 @@
 import 'package:cuts/utils/const.dart';
+import 'package:cuts/widgets/text.dart';
 import 'package:flutter/material.dart';
 
 class CircleButton extends StatelessWidget {
-  final Text text;
+  final MyText text;
   final Icon icon;
   final Function onPressed;
   final Color color;
@@ -34,7 +35,7 @@ class CircleButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               icon is Icon ? icon : null,
-              text is Text ? text : null,
+              text is MyText ? text : null,
             ],
           ),
         ),
