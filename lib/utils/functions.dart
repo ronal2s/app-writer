@@ -2,6 +2,7 @@ library functions;
 
 import 'dart:math';
 import 'dart:io';
+import 'package:cuts/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter/services.dart';
@@ -40,6 +41,15 @@ void showAlert(BuildContext context,
           actions: buttons,
         );
       });
+}
+
+void showSnackBar(BuildContext context, {@required Widget content}) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      backgroundColor: Colors.blueGrey,
+      content: content,
+    ),
+  );
 }
 
 Future<bool> checkInternetConnection() async {

@@ -40,11 +40,11 @@ void main() => initializeDateFormatting().then((value) => runApp(MultiProvider(
               buttonColor: PRIMARY_COLOR,
               textTheme: ButtonTextTheme.primary,
             ),
-            elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-              ),
-            ),
+            // elevatedButtonTheme: ElevatedButtonThemeData(
+            //   style: ButtonStyle(
+            //     backgroundColor: MaterialStateProperty.all(Colors.white),
+            //   ),
+            // ),
             dividerTheme: DividerThemeData(
               color: Colors.grey[800],
               space: 50,

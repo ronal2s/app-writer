@@ -19,6 +19,11 @@ class JournalForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final node = FocusScope.of(context);
     final Size size = MediaQuery.of(context).size;
+
+    void onCreate() {
+      showSnackBar(context, content: Text('Journal creado!'));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Nuevo Journal'),
@@ -37,6 +42,8 @@ class JournalForm extends StatelessWidget {
                       MyText(
                         toCapitalize(DateFormat.MMMMEEEEd('es').format(today)),
                         fontSize: 16,
+                        color: PRIMARY_COLOR,
+                        fontWeight: FontWeight.bold,
                       ),
                       Lottie.asset(
                         'assets/lotties/girl_with_cellphone.json',
@@ -81,8 +88,8 @@ class JournalForm extends StatelessWidget {
                       MyElevatedButton(
                         fullWidth: true,
                         // height: 50,
-                        text: 'Agregar',
-                        onPressed: () {},
+                        text: 'Guardar',
+                        onPressed: onCreate,
                       ),
                     ],
                   ),

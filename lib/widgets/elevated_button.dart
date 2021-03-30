@@ -5,7 +5,6 @@ import 'package:cuts/widgets/text.dart';
 class MyElevatedButton extends StatelessWidget {
   final void Function() onPressed;
   final String text;
-  final Color textColor;
   final bool loading;
   final Color color;
   final double height;
@@ -20,7 +19,6 @@ class MyElevatedButton extends StatelessWidget {
     this.onPressed,
     this.loading = false,
     this.icon,
-    this.textColor,
     this.textSize,
     this.image,
     this.fullWidth = false,
@@ -53,7 +51,6 @@ class MyElevatedButton extends StatelessWidget {
             MyText(
               text,
               fontSize: textSize,
-              color: textColor,
               overflow: TextOverflow.visible,
               softWrap: false,
             ),
