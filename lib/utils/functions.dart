@@ -2,7 +2,6 @@ library functions;
 
 import 'dart:math';
 import 'dart:io';
-import 'package:cuts/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter/services.dart';
@@ -123,6 +122,10 @@ void popUntil(BuildContext context, String name) {
     context,
     ModalRoute.withName(name),
   );
+}
+
+void popView(BuildContext context) {
+  Navigator.pop(context);
 }
 
 void toNamedView(context, {@required Widget view, @required String name}) {

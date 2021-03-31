@@ -2,7 +2,7 @@ import 'package:cuts/utils/const.dart';
 import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/home/components/home_button.dart';
 import 'package:cuts/views/journal/journal.view.dart';
-import 'package:cuts/views/journal/journal_form.view.dart';
+import 'package:cuts/views/phrases/phrases.view.dart';
 import 'package:cuts/widgets/text.dart';
 import 'package:flutter/material.dart';
 
@@ -61,6 +61,9 @@ class HomeView extends StatelessWidget {
           HomeButton(
             icon: Icons.lightbulb,
             text: 'Frases',
+            onPressed: () {
+              pushView(context, view: PhrasesView());
+            },
           ),
         ],
       ),

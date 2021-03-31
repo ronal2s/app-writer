@@ -6,16 +6,28 @@ class HomeButton extends StatelessWidget {
   final String text;
   final IconData icon;
   final Function onPressed;
+  final double height;
+  final double width;
+  final double fontSize;
+  final double iconSize;
 
-  HomeButton({@required this.text, this.icon, this.onPressed});
+  HomeButton({
+    @required this.text,
+    this.icon,
+    this.onPressed,
+    this.width,
+    this.height,
+    this.fontSize = 24,
+    this.iconSize = 28,
+  });
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return Container(
-      width: size.width * 0.7,
-      height: size.height * 0.12,
+      width: width is double ? width : size.width * 0.7,
+      height: height is double ? height : size.height * 0.12,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
@@ -42,13 +54,13 @@ class HomeButton extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  size: 28,
+                  size: iconSize,
                   color: PRIMARY_COLOR,
                 ),
                 MyText(
                   text,
                   color: PRIMARY_COLOR,
-                  fontSize: 24,
+                  fontSize: fontSize,
                   fontWeight: FontWeight.w300,
                 ),
               ],
