@@ -21,6 +21,7 @@ class MyTextField extends StatelessWidget {
   final Widget suffixIcon;
   final String hintText;
   final TextInputAction textInputAction;
+  final int minLines;
 
   const MyTextField({
     Key key,
@@ -44,6 +45,7 @@ class MyTextField extends StatelessWidget {
     this.suffixIcon,
     this.textInputAction,
     this.onEditingComplete,
+    this.minLines,
   });
 
   @override
@@ -57,6 +59,7 @@ class MyTextField extends StatelessWidget {
       obscureText: isPassword is bool && isPassword,
       textInputAction: textInputAction,
       onEditingComplete: onEditingComplete,
+      minLines: minLines,
       onChanged: (value) => onChanged is Function ? onChanged(value) : () {},
       decoration: InputDecoration(
         labelText: label,
