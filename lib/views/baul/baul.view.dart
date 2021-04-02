@@ -6,10 +6,9 @@ import 'package:cuts/views/journal/journal_form.view.dart';
 import 'package:cuts/widgets/elevated_button.dart';
 import 'package:cuts/widgets/keyboard_container.dart';
 import 'package:cuts/widgets/text.dart';
-import 'package:cuts/widgets/textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
+// ignore: must_be_immutable
 class BaulView extends StatelessWidget {
   String answer1 = '';
   String answer2 = '';
