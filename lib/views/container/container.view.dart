@@ -1,6 +1,7 @@
 import 'package:cuts/utils/const.dart';
 import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/home/home.view.dart';
+import 'package:cuts/views/journal/journal_record.view.dart';
 import 'package:cuts/views/welcome/welcome.view.dart';
 import 'package:cuts/widgets/circle_button.dart';
 import 'package:cuts/widgets/text.dart';
@@ -101,6 +102,9 @@ class _ContainerViewState extends State<ContainerView> {
                   color: PRIMARY_COLOR,
                 ),
                 color: SECONDARY_COLOR,
+                onPressed: () {
+                  pushView(context, view: JournalRecord());
+                },
               ),
               CircleButton(
                 text: MyText(
@@ -123,6 +127,9 @@ class _ContainerViewState extends State<ContainerView> {
                   color: PRIMARY_COLOR,
                 ),
                 color: SECONDARY_COLOR,
+                // onPressed: () {
+                //   pushView(context, view: Settings)
+                // },
               ),
             ],
           ),

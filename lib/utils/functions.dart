@@ -42,10 +42,11 @@ void showAlert(BuildContext context,
       });
 }
 
-void showSnackBar(BuildContext context, {@required Widget content}) {
+void showSnackBar(BuildContext context,
+    {@required Widget content, Color color}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: color is Color ? color : Colors.blueGrey,
       content: content,
     ),
   );

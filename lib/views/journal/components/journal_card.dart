@@ -6,9 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class JournalCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final String date;
+
   const JournalCard({
-    Key key,
-  }) : super(key: key);
+    @required this.title,
+    @required this.subtitle,
+    @required this.date,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +28,15 @@ class JournalCard extends StatelessWidget {
           child: Column(
             children: [
               ListTile(
-                title: Text('Nombre de entrada'),
-                subtitle: Text('Sentimiento #1, Sentimiento #2'),
+                title: Text(title),
+                subtitle: Text(subtitle.substring(0, 80) + '...'),
                 trailing: Container(
                   padding: EdgeInsets.all(DEFAULT_PADDING),
                   decoration: BoxDecoration(
                       color: PRIMARY_COLOR,
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: MyText(
-                    DateFormat.yMd('es').format(DateTime.now()),
+                    date,
                     color: Colors.white,
                   ),
                 ),

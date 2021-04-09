@@ -17,3 +17,5 @@ const String MAPBOX_STYLE =
 const double DEFAULT_SPACE = 10;
 const double INPUT_HEIGHT = 89;
 const double DEFAULT_PADDING = 8;
+
+const String URL_API = 'http://www.emotionisc.tk:8080';
