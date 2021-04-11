@@ -23,15 +23,19 @@ class FormWelcome extends StatefulWidget {
 class _FormWelcomeState extends State<FormWelcome> {
   double height = 0;
   final formKey = new GlobalKey<FormState>();
+  bool loading = false;
+
   RequestLogin loginModel = RequestLogin(
     correo: 'yorman@mail.com',
     password: 'hola123',
   );
 
   onSignIn() async {
-    print("WEY!");
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
+      setState(() {
+        loading = true;
+      });
       ResponseLogin response = await requestLogin(loginModel: loginModel);
       print(response);
       if (!response.error) {
@@ -47,6 +51,9 @@ class _FormWelcomeState extends State<FormWelcome> {
           color: Colors.red,
         );
       }
+      setState(() {
+        loading = false;
+      });
     }
   }
 
@@ -104,6 +111,7 @@ class _FormWelcomeState extends State<FormWelcome> {
                     text: 'Iniciar sesión'.toUpperCase(),
                     color: PRIMARY_COLOR,
                     onPressed: onSignIn,
+                    loading: loading,
                   ),
                 ),
                 // MyRaisedButton(

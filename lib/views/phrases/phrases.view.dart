@@ -57,7 +57,7 @@ class PhrasesView extends StatelessWidget {
         title: Text('Frases'),
       ),
       body: Container(
-        width: double.infinity,
+        // width: double.infinity,
         padding: EdgeInsets.all(DEFAULT_PADDING),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,

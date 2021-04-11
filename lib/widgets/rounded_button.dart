@@ -7,6 +7,7 @@ class RoundedButton extends StatelessWidget {
   final Color color, textColor;
   final bool autoWidth;
   final bool outlined;
+  final bool loading;
 
   const RoundedButton({
     this.text,
@@ -15,6 +16,7 @@ class RoundedButton extends StatelessWidget {
     this.textColor = Colors.white,
     this.autoWidth = false,
     this.outlined = false,
+    this.loading = false,
   });
 
   @override
@@ -39,12 +41,28 @@ class RoundedButton extends StatelessWidget {
             backgroundColor: outlined ? Colors.transparent : color,
           ),
           onPressed: onPressed is Function ? onPressed : () {},
-          child: Text(
-            text,
-            style: TextStyle(
-                color: outlined
-                    ? (color != null ? color : PRIMARY_COLOR)
-                    : textColor),
+          child: Wrap(
+            spacing: loading ? 5 : 0,
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                    color: outlined
+                        ? (color != null ? color : PRIMARY_COLOR)
+                        : textColor),
+              ),
+              loading
+                  ? SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3,
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).scaffoldBackgroundColor),
+                      ),
+                    )
+                  : SizedBox(),
+            ],
           ),
         ),
       ),
