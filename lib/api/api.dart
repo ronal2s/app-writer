@@ -45,8 +45,7 @@ Future<ResponseError> createJournal(JournalModel journalModel) async {
 }
 
 Future<bool> deleteJournal(int id) async {
-  final response =
-      await http.get('http://www.emotionisc.tk:8080/historial/eliminar/$id');
+  final response = await http.get('$URL_API/historial/eliminar/$id');
   Map answer = jsonDecode(response.body);
   print('Error: ...' + answer['error'].toString());
   return answer['error'];
@@ -70,8 +69,7 @@ Future<ResponseError> updateJournal(
 
 Future<ResponseGratitud> requestGratitud() async {
   String userId = await getPrefs(key: SecureKeys.userId.value);
-  final response =
-      await http.get('http://www.emotionisc.tk:8080/gratitud/practica/$userId');
+  final response = await http.get('$URL_API/gratitud/practica/$userId');
   ResponseGratitud responseGratitud = ResponseGratitud.fromJson(response.body);
   return responseGratitud;
 }
@@ -80,7 +78,7 @@ Future<ResponseError> sendRespondGratitud(
     RespondGratitud respondGratitud) async {
   String userId = await getPrefs(key: SecureKeys.userId.value);
   final response = await http.post(
-    'http://www.emotionisc.tk:8080/gratitud/practica/$userId',
+    '$URL_API/gratitud/practica/$userId',
     headers: header,
     body: respondGratitud.toJson(),
   );
@@ -92,10 +90,29 @@ Future<ResponseError> sendRespondGratitud(
 Future<ResponseJournalByDate> requestJournalsByDate(
     {@required int anio, @required int mes, @required int dia}) async {
   String userId = await getPrefs(key: SecureKeys.userId.value);
-  final response = await http.get(
-      'http://www.emotionisc.tk:8080/historial/entrada/fecha/$userId/$anio/$mes/$dia');
+  final response = await http
+      .get('$URL_API/historial/entrada/fecha/$userId/$anio/$mes/$dia');
   print(response.body);
   ResponseJournalByDate responseJournalByDate =
       ResponseJournalByDate.fromJson(response.body);
   return responseJournalByDate;
+}
+
+Future<ResponseGraphs> requestGraphsData(
+    {@required int anio, @required int mes, @required int dia}) async {
+  String userId = await getPrefs(key: SecureKeys.userId.value);
+  var response;
+  print('HOLAAAA!!');
+  if (anio != null) {
+    response = await http.get('$URL_API/grafica/agno/$userId/$anio');
+  }
+  if (mes != null) {
+    response = await http.get('$URL_API/grafica/mes/$userId/$anio/$mes');
+  }
+  if (dia != null) {
+    response = await http.get('$URL_API/grafica/fecha/$userId/$anio/$mes/$dia');
+  }
+  print(response.body);
+  ResponseGraphs responseGraphs = ResponseGraphs.fromJson(response.body);
+  return responseGraphs;
 }

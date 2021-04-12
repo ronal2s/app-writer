@@ -56,10 +56,10 @@ class _JournalFormState extends State<JournalForm> {
           } else {
             showSnackBar(context,
                 content: Text('Ha ocurrido un error'), color: Colors.red);
-            setState(() {
-              loading = false;
-            });
           }
+          setState(() {
+            loading = false;
+          });
         } else {
           ResponseError response = await updateJournal(
             id: widget.editJournalItem.id,
@@ -148,7 +148,7 @@ class _JournalFormState extends State<JournalForm> {
                         minLines: 3,
                         label: 'Contenido',
                         validator: (value) {
-                          if (value.allMatches(' ').length < 2 ||
+                          if (value.split(' ').length < 1 ||
                               value.length == 0) {
                             return 'Debe contener al menos dos palabras';
                           }

@@ -616,3 +616,117 @@ class ResponseJournalByDate {
         message.hashCode;
   }
 }
+
+class ResponseGraphs {
+  List<GraphData> data;
+  bool error;
+  String message;
+  ResponseGraphs({
+    this.data,
+    this.error,
+    this.message,
+  });
+
+  ResponseGraphs copyWith({
+    List<GraphData> data,
+    bool error,
+    String message,
+  }) {
+    return ResponseGraphs(
+      data: data ?? this.data,
+      error: error ?? this.error,
+      message: message ?? this.message,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'data': data?.map((x) => x.toMap())?.toList(),
+      'error': error,
+      'message': message,
+    };
+  }
+
+  factory ResponseGraphs.fromMap(Map<String, dynamic> map) {
+    return ResponseGraphs(
+      data: List<GraphData>.from(map['data']?.map((x) => GraphData.fromMap(x))),
+      error: map['error'],
+      message: map['message'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ResponseGraphs.fromJson(String source) =>
+      ResponseGraphs.fromMap(json.decode(source));
+
+  @override
+  String toString() =>
+      'ResponseGraphs(data: $data, error: $error, message: $message)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ResponseGraphs &&
+        listEquals(other.data, data) &&
+        other.error == error &&
+        other.message == message;
+  }
+
+  @override
+  int get hashCode => data.hashCode ^ error.hashCode ^ message.hashCode;
+}
+
+class GraphData {
+  String emocion;
+  String porciento;
+  GraphData({
+    this.emocion,
+    this.porciento,
+  });
+
+  GraphData copyWith({
+    String emocion,
+    String porciento,
+  }) {
+    return GraphData(
+      emocion: emocion ?? this.emocion,
+      porciento: porciento ?? this.porciento,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'emocion': emocion,
+      'porciento': porciento,
+    };
+  }
+
+  factory GraphData.fromMap(Map<String, dynamic> map) {
+    return GraphData(
+      emocion: map['emocion'],
+      porciento: map['porciento'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory GraphData.fromJson(String source) =>
+      GraphData.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'GraphData(emocion: $emocion, porciento: $porciento)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is GraphData &&
+        other.emocion == emocion &&
+        other.porciento == porciento;
+  }
+
+  @override
+  int get hashCode => emocion.hashCode ^ porciento.hashCode;
+}
