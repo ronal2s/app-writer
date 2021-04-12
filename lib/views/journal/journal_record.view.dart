@@ -10,6 +10,7 @@ class JournalRecord extends StatefulWidget {
 }
 
 class _JournalRecordState extends State<JournalRecord> {
+  bool loading = true;
   List<ResponseJournals> journals = [];
   @override
   void initState() {
@@ -21,12 +22,12 @@ class _JournalRecordState extends State<JournalRecord> {
     var _journals = await requestJournals();
     setState(() {
       journals = _journals;
+      loading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    print('Total: ' + journals.length.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text('Entradas'),
@@ -37,12 +38,19 @@ class _JournalRecordState extends State<JournalRecord> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              loading ? CircularProgressIndicator() : SizedBox(),
               ...journals
-                  .map((e) => JournalCard(
-                        title: 'Ejemplo',
-                        subtitle: e.cuerpo,
-                        date: e.fecha,
-                      ))
+                  .map(
+                    (e) => JournalCard(
+                      title: e.titulo is String ? e.titulo : 'Sin título',
+                      subtitle: e.cuerpo is String ? e.cuerpo : 'Sin contenido',
+                      feeling: e.sentimiento is String
+                          ? e.sentimiento
+                          : 'Sin sentimiento',
+                      date: e.fecha,
+                      id: e.idEntrada,
+                    ),
+                  )
                   .toList(),
             ],
           ),

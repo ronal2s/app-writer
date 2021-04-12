@@ -105,7 +105,7 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
             calendarStyle: CalendarStyle(
               selectedColor: Colors.grey[300],
               todayColor: Colors.white,
-              markersColor: SECONDARY_COLOR,
+              markersColor: Color(0xFFD85656),
               todayStyle: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.green,
@@ -148,7 +148,7 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
     String dayNowOnlyDate = DateTime.now().toString().split(' ')[0];
     return selectedEvents.length > 0
         ? Container(
-            color: Colors.red,
+            // color: Colors.red,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -159,10 +159,10 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
                     child: ListTile(
                       // title: Text('Acciones del día '),
                       title: Text(
-                        'Acciones del ' +
+                        'Entradas del ' +
                             DateFormat.MMMMEEEEd('es').format(selectedDay),
                       ),
-                      subtitle: Text('Acciones: ${selectedEvents.length}'),
+                      subtitle: Text('Resultado: ${selectedEvents.length}'),
                       trailing: IconButton(
                         icon: Icon(Icons.add),
                         onPressed: () => widget.onCreateEvent(DateTime.now()),

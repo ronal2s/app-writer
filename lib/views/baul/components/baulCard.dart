@@ -7,12 +7,12 @@ class BaulCard extends StatelessWidget {
   final String label;
   final String placeholder;
   final String value;
-  final Function onSaved;
+  final Function onChanged;
 
   BaulCard({
     @required this.label,
     this.value,
-    this.onSaved,
+    this.onChanged,
     this.placeholder,
   });
 
@@ -41,7 +41,7 @@ class BaulCard extends StatelessWidget {
                   minLines: 20,
                   border: OutlineInputBorder(),
                   hintText: placeholder,
-                  onSaved: onSaved,
+                  onChanged: onChanged,
                 )
               ],
             )),

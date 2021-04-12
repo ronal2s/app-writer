@@ -34,8 +34,8 @@ class CircleButton extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              icon is Icon ? icon : null,
-              text is MyText ? text : null,
+              icon is Icon ? icon : SizedBox(),
+              text is MyText ? text : SizedBox(),
             ],
           ),
         ),

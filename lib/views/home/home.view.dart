@@ -1,6 +1,7 @@
 import 'package:cuts/utils/const.dart';
 import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/baul/baul.view.dart';
+import 'package:cuts/views/baul/baul_welcome.view.dart';
 import 'package:cuts/views/home/components/home_button.dart';
 import 'package:cuts/views/journal/journal.view.dart';
 import 'package:cuts/views/phrases/phrases.view.dart';
@@ -58,7 +59,7 @@ class HomeView extends StatelessWidget {
             icon: Icons.clean_hands_outlined,
             text: 'Baúl de gratitud',
             onPressed: () {
-              pushView(context, view: BaulView());
+              pushView(context, view: BaulWelcomeView());
             },
           ),
           SizedBox(height: DEFAULT_SPACE * 4),

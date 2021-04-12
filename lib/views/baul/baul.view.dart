@@ -1,60 +1,122 @@
+import 'package:cuts/api/api.dart';
+import 'package:cuts/api/api_models.dart';
 import 'package:cuts/utils/const.dart';
 import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/baul/components/baulCard.dart';
 import 'package:cuts/views/home/components/home_button.dart';
 import 'package:cuts/views/journal/journal_form.view.dart';
+import 'package:cuts/widgets/circle_button.dart';
 import 'package:cuts/widgets/elevated_button.dart';
 import 'package:cuts/widgets/keyboard_container.dart';
 import 'package:cuts/widgets/text.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class BaulView extends StatelessWidget {
-  String answer1 = '';
-  String answer2 = '';
-  String answer3 = '';
+class BaulView extends StatefulWidget {
+  @override
+  _BaulViewState createState() => _BaulViewState();
+}
+
+class _BaulViewState extends State<BaulView> {
+  bool loading = true;
+  bool loadingSendingResponse = false;
+  List<PracticaGratitud> questions = [];
+  Map answers = {};
+
   final formKey = new GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    ResponseGratitud responseGratitud = await requestGratitud();
+    if (responseGratitud.error) {
+      showSnackBar(
+        context,
+        content: Text(responseGratitud.message),
+        color: Colors.red,
+      );
+      setState(() {
+        loading = false;
+      });
+    } else {
+      setState(() {
+        loading = false;
+        questions = responseGratitud.data;
+        responseGratitud.data.forEach((element) {
+          answers[element.pregunta] = '';
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    void onEndPractice() {
-      showAlert(context,
-          title: 'Antes de continuar...',
-          content: Container(
-            height: size.height * 0.15,
-            child: Column(
-              children: [
-                MyText(
-                  '¿Le gustaría escribir en su Journal sobre lo que ha reflexionado?',
-                  color: PRIMARY_COLOR,
-                ),
-                SizedBox(height: DEFAULT_SPACE * 2),
-                HomeButton(
-                  height: 50,
-                  fontSize: 18,
-                  iconSize: 24,
-                  icon: Icons.add,
-                  text: 'Entrada Nueva',
-                  onPressed: () {
-                    popView(context);
-                    popView(context);
-                    pushView(context, view: JournalForm());
-                  },
-                ),
-              ],
+    void onEndPractice() async {
+      try {
+        setState(() {
+          loadingSendingResponse = true;
+        });
+        questions.forEach((element) async {
+          RespondGratitud respondGratitud = RespondGratitud(
+            idPract: element.idPract,
+            texto: answers[element.pregunta],
+          );
+          ResponseError response = await sendRespondGratitud(respondGratitud);
+          showSnackBar(
+            context,
+            content: Text(response.message),
+            color: Colors.green,
+          );
+        });
+        setState(() {
+          loadingSendingResponse = false;
+        });
+        showAlert(context,
+            title: 'Antes de continuar...',
+            content: Container(
+              height: size.height * 0.15,
+              child: Column(
+                children: [
+                  MyText(
+                    '¿Le gustaría escribir en su Journal sobre lo que ha reflexionado?',
+                    color: PRIMARY_COLOR,
+                  ),
+                  SizedBox(height: DEFAULT_SPACE * 2),
+                  HomeButton(
+                    height: 50,
+                    fontSize: 18,
+                    iconSize: 24,
+                    icon: Icons.add,
+                    text: 'Entrada Nueva',
+                    onPressed: () {
+                      popView(context);
+                      popView(context);
+                      pushView(context, view: JournalForm());
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-          buttons: [
-            TextButton(
-              onPressed: () {
-                popView(context);
-                popView(context);
-              },
-              child: Text('Finalizar práctica'),
-              style: TextButton.styleFrom(primary: PRIMARY_COLOR),
-            ),
-          ]);
+            buttons: [
+              TextButton(
+                onPressed: () {
+                  popView(context);
+                  popView(context);
+                },
+                child: Text('Finalizar práctica'),
+                style: TextButton.styleFrom(primary: PRIMARY_COLOR),
+              ),
+            ]);
+      } catch (error) {
+        showSnackBar(context,
+            content: Text('Ha ocurrido un error'), color: Colors.red);
+      }
     }
 
     return Scaffold(
@@ -72,10 +134,6 @@ class BaulView extends StatelessWidget {
                 // mainAxisAlignment: MainAxisAlignment.center,
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Lottie.asset(
-                  //   'assets/lotties/woman_thinking.json',
-                  //   width: size.width * 0.6,
-                  // ),
                   SizedBox(height: DEFAULT_SPACE),
                   MyText(
                     'Desliza',
@@ -86,40 +144,29 @@ class BaulView extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Wrap(
                       children: [
-                        BaulCard(
-                            label:
-                                'Una razón por la cual mi vida es genial actualmente',
-                            placeholder: 'Comenzar a escribir',
-                            onSaved: (value) {
-                              answer1 = value;
-                            }),
-                        BaulCard(
-                            label:
-                                'Una persona cuya presencia hace mi vida más increíble',
-                            onSaved: (value) {
-                              answer2 = value;
-                            }),
-                        BaulCard(
-                            label: 'Un recuerdo inolvidable que atesoro',
-                            onSaved: (value) {
-                              answer3 = value;
-                            }),
-                        // BaulCard(
-                        //     label:
-                        //         'Escribe una carta de agradecimiento a alguien de quien estés agradecido de tener en tu vida',
-                        //     onSaved: (value) {
-                        //       // answer3 = value;
-                        //     }),
-                        // BaulCard(
-                        //     label:
-                        //         'Por qué quieres dar gracias hoy?',
-                        //     onSaved: (value) {
-                        //       // answer3 = value;
-                        //     }),
+                        loading ? CircularProgressIndicator() : SizedBox(),
+                        ...questions.map(
+                          (e) => BaulCard(
+                            label: e.pregunta,
+                            onChanged: (value) {
+                              answers[e.pregunta] = value;
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),
                   SizedBox(height: DEFAULT_SPACE),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: loadingSendingResponse
+                        ? CircularProgressIndicator()
+                        : CircleButton(
+                            size: 50,
+                            icon: Icon(Icons.check, color: Colors.white),
+                            onPressed: onEndPractice,
+                          ),
+                  )
                   // MyElevatedButton(
                   //   text: 'Finalizar práctica',
                   //   onPressed: onEndPractice,

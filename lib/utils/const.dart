@@ -3,7 +3,8 @@ library constants;
 import 'package:flutter/material.dart';
 
 // const Color PRIMARY_COLOR = Colors.deepPurple;
-const Color PRIMARY_COLOR = Color(0xFF424242);
+// const Color PRIMARY_COLOR = Color(0xFF424242);
+const Color PRIMARY_COLOR = Color(0xFF809FAA);
 const Color PRIMARY_LIGHT_COLOR = Color(0xFFefefef);
 const Color SECONDARY_COLOR = Color(0xFFeeeeee);
 const Color BACKGROUND_COLOR = Color(0xFFFAFAFA);

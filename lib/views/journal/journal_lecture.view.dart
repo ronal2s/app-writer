@@ -1,13 +1,50 @@
+import 'package:cuts/api/api.dart';
+import 'package:cuts/models/journal.model.dart';
 import 'package:cuts/utils/const.dart';
+import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/journal/components/journal_tag.dart';
+import 'package:cuts/views/journal/journal_form.view.dart';
+import 'package:cuts/views/journal/journal_record.view.dart';
 import 'package:cuts/widgets/elevated_button.dart';
 import 'package:cuts/widgets/text.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class JournalLecture extends StatelessWidget {
+  final String title;
+  final String feeling;
+  final String date;
+  final String content;
+  final int id;
+
+  JournalLecture({
+    @required this.id,
+    @required this.title,
+    @required this.feeling,
+    @required this.date,
+    @required this.content,
+  });
+
   @override
   Widget build(BuildContext context) {
+    void onDeleteJournal() async {
+      bool response = await deleteJournal(id);
+      if (!response) {
+        showSnackBar(
+          context,
+          content: Text('Journal eliminado'),
+          color: Colors.green,
+        );
+        popView(context);
+        popView(context);
+      } else {
+        showSnackBar(
+          context,
+          content: Text('Ha ocurrido un error'),
+          color: Colors.red,
+        );
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Lectura'),
@@ -20,7 +57,7 @@ class JournalLecture extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MyText(
-                'Piense en abundancia',
+                title,
                 fontSize: 28,
                 color: PRIMARY_COLOR,
                 textAlign: TextAlign.center,
@@ -30,21 +67,18 @@ class JournalLecture extends StatelessWidget {
               Wrap(
                 spacing: 10,
                 children: [
-                  JournalTag(text: 'Sentimiento 1'),
-                  JournalTag(text: 'Sentimiento 2'),
+                  JournalTag(text: feeling),
                 ],
               ),
               SizedBox(height: DEFAULT_SPACE),
               MyText(
-                DateFormat.yMd('es').format(
-                  DateTime.now(),
-                ),
+                date,
                 color: PRIMARY_COLOR,
                 fontSize: 18,
               ),
               SizedBox(height: DEFAULT_SPACE),
               Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae ante vel urna semper vehicula ac sit amet odio. Vestibulum vulputate gravida ligula. Nulla gravida vulputate purus eget tristique. Aenean bibendum turpis tellus, varius cursus elit malesuada at. Praesent ut tortor vel purus egestas fringilla. Nunc dignissim non urna non placerat. Sed ut quam a tortor faucibus tincidunt in quis metus. Aenean urna libero, placerat nec sodales vel, molestie sed mi. Phasellus at facilisis orci, nec mattis nisl. Integer molestie lectus sed porttitor lobortis. Proin aliquam lobortis ligula non sollicitudin. Fusce mattis rhoncus semper. Nam sodales euismod nisl at pellentesque. Aliquam erat volutpat.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae ante vel urna semper vehicula ac sit amet odio. Vestibulum vulputate gravida ligula. Nulla gravida vulputate purus eget tristique. Aenean bibendum turpis tellus, varius cursus elit malesuada at. Praesent ut tortor vel purus egestas fringilla. Nunc dignissim non urna non placerat. Sed ut quam a tortor faucibus tincidunt in quis metus. Aenean urna libero, placerat nec sodales vel, molestie sed mi. Phasellus at facilisis orci, nec mattis nisl. Integer molestie lectus sed porttitor lobortis. Proin aliquam lobortis ligula non sollicitudin. Fusce mattis rhoncus semper. Nam sodales euismod nisl at pellentesque. Aliquam erat volutpat.',
+                content,
                 style: TextStyle(
                   color: PRIMARY_COLOR,
                   wordSpacing: 2,
@@ -56,12 +90,24 @@ class JournalLecture extends StatelessWidget {
                 children: [
                   MyElevatedButton(
                     text: 'Editar',
-                    onPressed: () {},
+                    onPressed: () {
+                      JournalModel journalModel = JournalModel(
+                          titulo: title,
+                          texto: content,
+                          sentimiento: feeling,
+                          id: id);
+                      pushView(
+                        context,
+                        view: JournalForm(
+                          editJournalItem: journalModel,
+                        ),
+                      );
+                    },
                   ),
                   MyElevatedButton(
                     text: 'Eliminar',
                     color: Colors.grey,
-                    onPressed: () {},
+                    onPressed: onDeleteJournal,
                   ),
                 ],
               )

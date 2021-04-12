@@ -1,41 +1,47 @@
 import 'dart:convert';
 
 class JournalModel {
-  String title;
-  String feelings;
-  String description;
+  int id;
+  String titulo;
+  String sentimiento;
+  String texto;
 
   JournalModel({
-    this.title,
-    this.feelings,
-    this.description,
+    this.id,
+    this.titulo,
+    this.sentimiento,
+    this.texto,
   });
 
   JournalModel copyWith({
-    String title,
-    String feelings,
-    String description,
+    int id,
+    String titulo,
+    String sentimiento,
+    String texto,
   }) {
     return JournalModel(
-      title: title ?? this.title,
-      feelings: feelings ?? this.feelings,
-      description: description ?? this.description,
+      id: id ?? this.id,
+      titulo: titulo ?? this.titulo,
+      sentimiento: sentimiento ?? this.sentimiento,
+      texto: texto ?? this.texto,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'title': title,
-      'feelings': feelings,
-      'description': description,
+      'id': id,
+      'titulo': titulo,
+      'sentimiento': sentimiento,
+      'texto': texto,
     };
   }
 
   factory JournalModel.fromMap(Map<String, dynamic> map) {
     return JournalModel(
-      title: map['title'],
-      feelings: map['feelings'],
-      description: map['description'],
+      id: map['id'],
+      titulo: map['titulo'],
+      sentimiento: map['sentimiento'],
+      texto: map['texto'],
     );
   }
 
@@ -45,19 +51,26 @@ class JournalModel {
       JournalModel.fromMap(json.decode(source));
 
   @override
-  String toString() =>
-      'JournalModel(title: $title, feelings: $feelings, description: $description)';
+  String toString() {
+    return 'JournalModel(id: $id, titulo: $titulo, sentimiento: $sentimiento, texto: $texto)';
+  }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is JournalModel &&
-        other.title == title &&
-        other.feelings == feelings &&
-        other.description == description;
+        other.id == id &&
+        other.titulo == titulo &&
+        other.sentimiento == sentimiento &&
+        other.texto == texto;
   }
 
   @override
-  int get hashCode => title.hashCode ^ feelings.hashCode ^ description.hashCode;
+  int get hashCode {
+    return id.hashCode ^
+        titulo.hashCode ^
+        sentimiento.hashCode ^
+        texto.hashCode;
+  }
 }
