@@ -2,7 +2,7 @@
     package="com.example.cuts">
    <application
         android:usesCleartextTraffic="true"
-        android:label="writer"
+        android:label="Aware"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

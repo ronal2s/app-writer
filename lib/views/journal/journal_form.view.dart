@@ -52,7 +52,10 @@ class _JournalFormState extends State<JournalForm> {
           ResponseError response = await createJournal(journalModel);
           if (!response.error) {
             showSnackBar(context,
-                content: Text('Journal creado!'), color: Colors.green);
+                content: Text('Entrada creada!'), color: Colors.green);
+            popView(context);
+            popView(context);
+            popView(context);
           } else {
             showSnackBar(context,
                 content: Text('Ha ocurrido un error'), color: Colors.red);

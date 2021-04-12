@@ -11,18 +11,20 @@ import 'package:flutter/material.dart';
 const header = {'Content-Type': 'application/json', 'Connection': 'keep-alive'};
 
 Future<ResponseLogin> requestLogin({@required RequestLogin loginModel}) async {
+  print(loginModel.toJson());
   final response = await http.post(
     '$URL_API/login',
     headers: header,
     body: loginModel.toJson(),
   );
-  print(response.body);
+  // print(response.body);
   ResponseLogin responseLogin = ResponseLogin.fromJson(response.body);
   return responseLogin;
 }
 
 Future<List<ResponseJournals>> requestJournals() async {
   String userId = await getPrefs(key: SecureKeys.userId.value);
+  print('$URL_API/historial/$userId');
   final response = await http.get('$URL_API/historial/$userId');
   List list = jsonDecode(response.body);
   List<ResponseJournals> journalRecords =

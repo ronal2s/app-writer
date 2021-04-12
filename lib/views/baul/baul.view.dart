@@ -36,7 +36,7 @@ class _BaulViewState extends State<BaulView> {
     if (responseGratitud.error) {
       showSnackBar(
         context,
-        content: Text(responseGratitud.message),
+        content: Text('No hay preguntas disponibles el día de hoy'),
         color: Colors.red,
       );
       setState(() {
@@ -131,15 +131,15 @@ class _BaulViewState extends State<BaulView> {
             child: Form(
               key: formKey,
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: DEFAULT_SPACE),
-                  MyText(
-                    'Desliza',
-                    color: PRIMARY_COLOR,
-                    fontSize: 16,
-                  ),
+                  questions.length > 0
+                      ? MyText(
+                          'Desliza',
+                          color: PRIMARY_COLOR,
+                          fontSize: 16,
+                        )
+                      : SizedBox(),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Wrap(
@@ -157,16 +157,21 @@ class _BaulViewState extends State<BaulView> {
                     ),
                   ),
                   SizedBox(height: DEFAULT_SPACE),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: loadingSendingResponse
-                        ? CircularProgressIndicator()
-                        : CircleButton(
-                            size: 50,
-                            icon: Icon(Icons.check, color: Colors.white),
-                            onPressed: onEndPractice,
-                          ),
-                  )
+                  questions.length > 0
+                      ? Align(
+                          alignment: Alignment.centerRight,
+                          child: loadingSendingResponse
+                              ? CircularProgressIndicator()
+                              : CircleButton(
+                                  size: 50,
+                                  icon: Icon(Icons.check, color: Colors.white),
+                                  onPressed: onEndPractice,
+                                ),
+                        )
+                      : SizedBox(),
+                  questions.length == 0 && !loading
+                      ? MyText('No hay preguntas disponibles el día de hoy')
+                      : SizedBox(),
                   // MyElevatedButton(
                   //   text: 'Finalizar práctica',
                   //   onPressed: onEndPractice,

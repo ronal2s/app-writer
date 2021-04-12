@@ -11,7 +11,7 @@ class PrivacityView extends StatelessWidget {
       ),
       body: Container(
         width: double.infinity,
-        padding: EdgeInsets.all(DEFAULT_PADDING),
+        padding: EdgeInsets.all(DEFAULT_PADDING * 2),
         child: Column(
           children: [
             MyText(
@@ -19,7 +19,13 @@ class PrivacityView extends StatelessWidget {
               color: PRIMARY_COLOR,
               fontWeight: FontWeight.bold,
               fontSize: 16,
-            )
+            ),
+            SizedBox(height: DEFAULT_SPACE * 2),
+            MyText(
+              'Es particularmente importante comprender que los datos que se recopilen serán clasificados como datos confidenciales, garantizando una total privacidad de ellos. Aware te proporcionará un espacio perfecto de un diario íntimo o personal en el cual tendrás la libertad de expresarte de la manera en que desees, sin temer a ser expuesto. Tus datos solo podrán ser visualizados y compartidos con otros mediante tu propio consentimiento.',
+              color: PRIMARY_COLOR,
+              fontSize: 16,
+            ),
           ],
         ),
       ),

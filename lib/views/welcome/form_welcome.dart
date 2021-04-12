@@ -77,7 +77,7 @@ class _FormWelcomeState extends State<FormWelcome> {
                     child: MyTextField(
                       initialValue: loginModel.correo,
                       isRequired: true,
-                      label: "Correo22",
+                      label: "Correo",
                       border: InputBorder.none,
                       keyboardType: TextInputType.number,
                       icon: widget.isVisible
