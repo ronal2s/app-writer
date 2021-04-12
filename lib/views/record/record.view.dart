@@ -57,7 +57,7 @@ class _RecordViewState extends State<RecordView> {
       charts.Series(
         id: idChart,
         data: list,
-        labelAccessorFn: (row, _) => '${row.emocion} ${row.porciento}',
+        labelAccessorFn: (row, _) => '${row.emocion} %${row.porciento}',
         domainFn: (grades, _) => grades.emocion, //Name domain
         measureFn: (grades, _) =>
             double.parse(grades.porciento), //Number measure

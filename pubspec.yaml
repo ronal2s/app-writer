@@ -31,7 +31,7 @@ dependencies:
   encrypt: ^4.1.0
   flutter_map: any
   location: any
-  shared_preferences: ^0.5.12+4
+  shared_preferences: any
   image_picker: any
   badges: ^1.1.6
   backdrop: ^0.6.0
