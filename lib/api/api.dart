@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:cuts/api/api_models.dart';
 import 'package:flutter/material.dart';
 
-const header = {'Content-Type': 'application/json'};
+const header = {'Content-Type': 'application/json', 'Connection': 'keep-alive'};
 
 Future<ResponseLogin> requestLogin({@required RequestLogin loginModel}) async {
   final response = await http.post(

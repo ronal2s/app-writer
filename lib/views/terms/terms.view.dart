@@ -10,13 +10,16 @@ class TermsView extends StatelessWidget {
         title: Text('Términos & Condiciones'),
       ),
       body: Container(
+        width: double.infinity,
         padding: EdgeInsets.all(DEFAULT_PADDING),
         child: Column(
           children: [
             MyText(
               'Términos y condiciones',
               color: PRIMARY_COLOR,
-            )
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
           ],
         ),
       ),

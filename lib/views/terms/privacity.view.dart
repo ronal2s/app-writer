@@ -10,12 +10,15 @@ class PrivacityView extends StatelessWidget {
         title: Text('Privacidad'),
       ),
       body: Container(
+        width: double.infinity,
         padding: EdgeInsets.all(DEFAULT_PADDING),
         child: Column(
           children: [
             MyText(
               'Privacidad',
               color: PRIMARY_COLOR,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
             )
           ],
         ),
