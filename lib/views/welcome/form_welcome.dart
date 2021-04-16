@@ -5,6 +5,7 @@ import 'package:cuts/utils/const.dart';
 import 'package:cuts/utils/enums/enums.dart';
 import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/container/container.view.dart';
+import 'package:cuts/views/signup/signup.view.dart';
 import 'package:cuts/widgets/keyboard_container.dart';
 import 'package:cuts/widgets/rounded_button.dart';
 import 'package:cuts/widgets/textfield.dart';
@@ -42,6 +43,10 @@ class _FormWelcomeState extends State<FormWelcome> {
         savePrefs(
           key: SecureKeys.userId.value,
           value: response.idUsuario.toString(),
+        );
+        savePrefs(
+          key: SecureKeys.fullname.value,
+          value: response.fullname.toString(),
         );
         replaceView(context, view: ContainerView());
       } else {
@@ -112,6 +117,16 @@ class _FormWelcomeState extends State<FormWelcome> {
                     color: PRIMARY_COLOR,
                     onPressed: onSignIn,
                     loading: loading,
+                  ),
+                ),
+                SizedBox(
+                  width: size.width * 0.6,
+                  child: RoundedButton(
+                    text: 'Registro'.toUpperCase(),
+                    color: Colors.red[200],
+                    onPressed: () {
+                      pushView(context, view: SignUpView());
+                    },
                   ),
                 ),
                 // MyRaisedButton(

@@ -1,4 +1,7 @@
+import 'package:cuts/api/api.dart';
+import 'package:cuts/api/api_models.dart';
 import 'package:cuts/utils/enums/user.enum.dart';
+import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/signup/bottom_signup.dart';
 import 'package:cuts/views/signup/lottie_signup.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +36,25 @@ class _SignUpViewState extends State<SignUpView> {
       Navigator.pop(context);
     }
 
-    void newAccount() {
+    void newAccount() async {
       if (formKey.currentState.validate()) {
         formKey.currentState.save();
-        formKey.currentState.reset();
+        user.fechaNacimiento = '1990-01-01';
+        ResponseError responseError = await requestSignup(userModel: user);
+        if (responseError.error) {
+          showSnackBar(
+            context,
+            content: Text(responseError.nameError),
+            color: Colors.red,
+          );
+        }
+      } else {
+        showSnackBar(
+          context,
+          content: Text('Usuario registrado'),
+          color: Colors.green,
+        );
+        popView(context);
       }
     }
 
@@ -49,10 +67,16 @@ class _SignUpViewState extends State<SignUpView> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: DEFAULT_SPACE * 5),
-                    LottieSignup(
-                      selected: userGender,
-                      onSelect: onSelecTypetUser,
+                    SizedBox(height: DEFAULT_SPACE * 10),
+                    // LottieSignup(
+                    //   selected: userGender,
+                    //   onSelect: onSelecTypetUser,
+                    // ),
+                    MyText(
+                      'REGISTRO',
+                      fontSize: 18,
+                      color: PRIMARY_COLOR,
+                      fontWeight: FontWeight.bold,
                     ),
                     Form(
                       key: formKey,
@@ -65,18 +89,27 @@ class _SignUpViewState extends State<SignUpView> {
                               keyboardType: TextInputType.number,
                               isRequired: true,
                               icon: Icon(Icons.person, color: PRIMARY_COLOR),
-                              onSaved: (value) => user.user = value,
+                              onSaved: (value) => user.nombre = value,
                             ),
                           ),
                           TextFieldContainer(
                             child: MyTextField(
-                              label: "Teléfono",
+                              label: "Apellidos",
                               border: InputBorder.none,
                               keyboardType: TextInputType.number,
                               isRequired: true,
-                              icon:
-                                  Icon(Icons.smartphone, color: PRIMARY_COLOR),
-                              onSaved: (value) => user.user = value,
+                              icon: Icon(Icons.person, color: PRIMARY_COLOR),
+                              onSaved: (value) => user.apellido = value,
+                            ),
+                          ),
+                          TextFieldContainer(
+                            child: MyTextField(
+                              label: "Correo",
+                              border: InputBorder.none,
+                              keyboardType: TextInputType.number,
+                              isRequired: true,
+                              icon: Icon(Icons.email, color: PRIMARY_COLOR),
+                              onSaved: (value) => user.correo = value,
                             ),
                           ),
                           TextFieldContainer(
@@ -86,7 +119,22 @@ class _SignUpViewState extends State<SignUpView> {
                               icon: Icon(Icons.lock, color: PRIMARY_COLOR),
                               isRequired: true,
                               isPassword: true,
-                              onSaved: (value) => user.password = value,
+                              onChanged: (value) => user.password = value,
+                            ),
+                          ),
+                          TextFieldContainer(
+                            child: MyTextField(
+                              label: "Confirmar Contraseña",
+                              border: InputBorder.none,
+                              icon: Icon(Icons.lock, color: PRIMARY_COLOR),
+                              isRequired: true,
+                              isPassword: true,
+                              onSaved: (value) => user.confPassword = value,
+                              validator: (value) {
+                                if (value != user.password) {
+                                  return 'Las contraseñas deben coincidir';
+                                }
+                              },
                             ),
                           ),
                         ],
@@ -109,7 +157,7 @@ class _SignUpViewState extends State<SignUpView> {
                           onTap: openLogin,
                           child: MyText(
                             "Iniciar sesión",
-                            color: SECONDARY_COLOR,
+                            color: Colors.red[200],
                             fontWeight: FontWeight.bold,
                           ),
                         )
@@ -119,7 +167,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
               ),
             ),
-            BottomSignUp(),
+            // BottomSignUp(),
           ],
         ),
       ),

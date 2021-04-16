@@ -1,4 +1,5 @@
 import 'package:cuts/utils/const.dart';
+import 'package:cuts/utils/enums/enums.dart';
 import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/settings/components/settingsButton.dart';
 import 'package:cuts/views/terms/privacity.view.dart';
@@ -13,7 +14,8 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    void showAccountInfo() {
+    void showAccountInfo() async {
+      String fullname = await getPrefs(key: SecureKeys.fullname.value);
       showAlert(context,
           title: 'Información de la cuenta',
           content: SizedBox(
@@ -21,6 +23,7 @@ class SettingsView extends StatelessWidget {
             child: Column(
               children: [
                 MyTextField(
+                  initialValue: fullname,
                   label: 'Nombre',
                   border: OutlineInputBorder(),
                 ),
@@ -84,11 +87,11 @@ class SettingsView extends StatelessWidget {
                 text: 'Información de la cuenta',
                 onPressed: showAccountInfo,
               ),
-              SettingsButton(
-                text: 'Cambiar contraseña',
-                onPressed: showChangePassword,
-              ),
-              SettingsButton(text: 'Notificaciones'),
+              // SettingsButton(
+              //   text: 'Cambiar contraseña',
+              //   onPressed: showChangePassword,
+              // ),
+              // SettingsButton(text: 'Notificaciones'),
               SettingsButton(
                 text: 'Términos & Condiciones',
                 onPressed: () {

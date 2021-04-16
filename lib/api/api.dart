@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cuts/models/journal.model.dart';
+import 'package:cuts/models/user.model.dart';
 import 'package:cuts/utils/const.dart';
 import 'package:cuts/utils/enums/enums.dart';
 import 'package:cuts/utils/functions.dart';
@@ -17,9 +18,21 @@ Future<ResponseLogin> requestLogin({@required RequestLogin loginModel}) async {
     headers: header,
     body: loginModel.toJson(),
   );
-  // print(response.body);
+  print(response.body);
   ResponseLogin responseLogin = ResponseLogin.fromJson(response.body);
   return responseLogin;
+}
+
+Future<ResponseError> requestSignup({@required UserModel userModel}) async {
+  print(userModel.toJson());
+  final response = await http.post(
+    '$URL_API/usuario/nuevo',
+    headers: header,
+    body: userModel.toJson(),
+  );
+  print(response.body);
+  ResponseError responseError = ResponseError.fromJson(response.body);
+  return responseError;
 }
 
 Future<List<ResponseJournals>> requestJournals() async {
