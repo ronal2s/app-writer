@@ -39,6 +39,7 @@ Future<List<ResponseJournals>> requestJournals() async {
   String userId = await getPrefs(key: SecureKeys.userId.value);
   print('$URL_API/historial/$userId');
   final response = await http.get('$URL_API/historial/$userId');
+  print(response.body);
   List list = jsonDecode(response.body);
   List<ResponseJournals> journalRecords =
       list.map((e) => ResponseJournals.fromMap(e)).toList();

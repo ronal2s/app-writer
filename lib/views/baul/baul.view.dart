@@ -57,7 +57,7 @@ class _BaulViewState extends State<BaulView> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    void onEndPractice() async {
+    void sendData() async {
       try {
         setState(() {
           loadingSendingResponse = true;
@@ -77,46 +77,51 @@ class _BaulViewState extends State<BaulView> {
         setState(() {
           loadingSendingResponse = false;
         });
-        showAlert(context,
-            title: 'Antes de continuar...',
-            content: Container(
-              height: size.height * 0.15,
-              child: Column(
-                children: [
-                  MyText(
-                    '¿Le gustaría escribir en su Journal sobre lo que ha reflexionado?',
-                    color: PRIMARY_COLOR,
-                  ),
-                  SizedBox(height: DEFAULT_SPACE * 2),
-                  HomeButton(
-                    height: 50,
-                    fontSize: 18,
-                    iconSize: 24,
-                    icon: Icons.add,
-                    text: 'Entrada Nueva',
-                    onPressed: () {
-                      popView(context);
-                      popView(context);
-                      pushView(context, view: JournalForm());
-                    },
-                  ),
-                ],
-              ),
-            ),
-            buttons: [
-              TextButton(
-                onPressed: () {
-                  popView(context);
-                  popView(context);
-                },
-                child: Text('Finalizar práctica'),
-                style: TextButton.styleFrom(primary: PRIMARY_COLOR),
-              ),
-            ]);
       } catch (error) {
         showSnackBar(context,
             content: Text('Ha ocurrido un error'), color: Colors.red);
       }
+    }
+
+    void onEndPractice() async {
+      showAlert(context,
+          title: 'Antes de continuar...',
+          content: Container(
+            height: size.height * 0.15,
+            child: Column(
+              children: [
+                MyText(
+                  '¿Le gustaría escribir en su Journal sobre lo que ha reflexionado?',
+                  color: PRIMARY_COLOR,
+                ),
+                SizedBox(height: DEFAULT_SPACE * 2),
+                HomeButton(
+                  height: 50,
+                  fontSize: 18,
+                  iconSize: 24,
+                  icon: Icons.add,
+                  text: 'Entrada Nueva',
+                  onPressed: () {
+                    sendData();
+                    popView(context);
+                    popView(context);
+                    pushView(context, view: JournalForm());
+                  },
+                ),
+              ],
+            ),
+          ),
+          buttons: [
+            TextButton(
+              onPressed: () {
+                sendData();
+                popView(context);
+                popView(context);
+              },
+              child: Text('Finalizar práctica'),
+              style: TextButton.styleFrom(primary: PRIMARY_COLOR),
+            ),
+          ]);
     }
 
     return Scaffold(

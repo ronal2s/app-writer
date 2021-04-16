@@ -29,6 +29,8 @@ class _FormWelcomeState extends State<FormWelcome> {
   RequestLogin loginModel = RequestLogin(
     correo: 'yorman@mail.com',
     password: 'hola123',
+    // correo: '',
+    // password: '',
   );
 
   onSignIn() async {
@@ -84,7 +86,7 @@ class _FormWelcomeState extends State<FormWelcome> {
                       isRequired: true,
                       label: "Correo",
                       border: InputBorder.none,
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.emailAddress,
                       icon: widget.isVisible
                           ? Icon(Icons.mail, color: PRIMARY_COLOR)
                           : null,

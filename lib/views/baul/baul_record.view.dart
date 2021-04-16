@@ -29,6 +29,9 @@ class _BaulRecordViewState extends State<BaulRecordView> {
         content: Text(responseGratitudRecords.message),
         color: Colors.red,
       );
+      setState(() {
+        loading = false;
+      });
     } else {
       setState(() {
         list = responseGratitudRecords.data;
@@ -48,7 +51,8 @@ class _BaulRecordViewState extends State<BaulRecordView> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              loading ? CircularProgressIndicator() : SizedBox(),
+              loading ? Center(child: CircularProgressIndicator()) : SizedBox(),
+              list.length == 0? Center(child: Text('No hay prácticas'),): SizedBox(),
               ...list
                   .map(
                     (e) => Card(

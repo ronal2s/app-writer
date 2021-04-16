@@ -132,7 +132,7 @@ class _RecordViewState extends State<RecordView> {
       charts.Series(
         id: idChart,
         data: list,
-        labelAccessorFn: (row, _) => '${row.emocion} %${row.porciento}',
+        labelAccessorFn: (row, _) => '${row.emocion} ${row.porciento}%',
         domainFn: (grades, _) => grades.emocion, //Name domain
         measureFn: (grades, _) =>
             double.parse(grades.porciento), //Number measure
@@ -167,10 +167,10 @@ class _RecordViewState extends State<RecordView> {
                   if (value == 'Este año' || value == 'Hoy') {
                     reorderData();
                   } else {
-                    // month = {
-                    //   'label': getMonthByNumber(date.month + 1),
-                    //   'value': getMonthByName(date.mon)
-                    // };
+                    month = {
+                      'label': getMonthByNumber(date.month - 1),
+                      'value': date.month
+                    };
                     year = date.year;
                   }
                 },
@@ -181,7 +181,8 @@ class _RecordViewState extends State<RecordView> {
                       children: [
                         SizedBox(height: DEFAULT_SPACE),
                         MyDropdownField(
-                          label: 'Mes',
+                          value: month['label'],
+                          label: 'Seleccione un mes',
                           items: getMonths(),
                           onChanged: (value) {
                             month = {
@@ -201,7 +202,7 @@ class _RecordViewState extends State<RecordView> {
                         SizedBox(height: DEFAULT_SPACE),
                         MyDropdownField(
                           value: year.toString(),
-                          label: 'Año',
+                          label: 'Seleccione un año',
                           items: getYears(from: 2000, to: 2021),
                           onChanged: (value) {
                             year = int.parse(value);

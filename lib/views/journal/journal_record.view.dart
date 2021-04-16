@@ -30,19 +30,28 @@ class _JournalRecordState extends State<JournalRecord> {
   }
 
   getRecords() async {
-    var _journals = await requestJournals();
-    setState(() {
-      journals = _journals;
-      journalsBackup = _journals;
-      loading = false;
-    });
+    try {
+      var _journals = await requestJournals();
+
+      setState(() {
+        journals = _journals;
+        journalsBackup = _journals;
+        loading = false;
+      });
+    } catch (error) {
+      showSnackBar(context,
+          content: Text('No hay entradas'), color: Colors.red);
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   reorderData() {
     if (filterType == 'Año') {
       List<ResponseJournals> list = [];
       journalsBackup.forEach((element) {
-        int elementYear = int.parse(element.fecha.split('/')[2]);
+        int elementYear = int.parse(element.fecha.split('-')[0]);
 
         if (year == elementYear) {
           list.add(element);
@@ -56,7 +65,7 @@ class _JournalRecordState extends State<JournalRecord> {
       int today = DateTime.now().day;
       List<ResponseJournals> list = [];
       journalsBackup.forEach((element) {
-        int elementDay = int.parse(element.fecha.split('/')[0]);
+        int elementDay = int.parse(element.fecha.split('-')[2]);
         if (elementDay == today) {
           list.add(element);
         }
@@ -68,8 +77,8 @@ class _JournalRecordState extends State<JournalRecord> {
     if (filterType == 'Mes') {
       List<ResponseJournals> list = [];
       journalsBackup.forEach((element) {
-        int elementYear = int.parse(element.fecha.split('/')[2]);
-        int elementMonth = int.parse(element.fecha.split('/')[1]);
+        int elementYear = int.parse(element.fecha.split('-')[0]);
+        int elementMonth = int.parse(element.fecha.split('-')[1]);
         if (year == elementYear && month['value'] + 1 == elementMonth) {
           list.add(element);
         }
@@ -105,6 +114,10 @@ class _JournalRecordState extends State<JournalRecord> {
                 onChanged: (value) {
                   setState(() {
                     filterType = value;
+                    if (value == 'Mes') {
+                      year = DateTime.now().year;
+                      month = {'label': getMonthByNumber(DateTime.now().month-1), 'value': DateTime.now().month-1};
+                    }
                   });
                   reorderData();
                 },
@@ -115,7 +128,8 @@ class _JournalRecordState extends State<JournalRecord> {
                       children: [
                         SizedBox(height: DEFAULT_SPACE),
                         MyDropdownField(
-                          label: 'Mes',
+                          value: month['label'],
+                          label: 'Seleccione un mes',
                           items: getMonths(),
                           onChanged: (value) {
                             month = {
@@ -134,7 +148,8 @@ class _JournalRecordState extends State<JournalRecord> {
                       children: [
                         SizedBox(height: DEFAULT_SPACE),
                         MyDropdownField(
-                          label: 'Año',
+                          value: year.toString(),
+                          label: 'Seleccione un año',
                           items: getYears(from: 2000, to: 2021),
                           onChanged: (value) {
                             year = int.parse(value);
@@ -146,6 +161,11 @@ class _JournalRecordState extends State<JournalRecord> {
                     )
                   : SizedBox(),
               SizedBox(height: DEFAULT_SPACE),
+              journals.length == 0
+                  ? Center(
+                      child: Text('No hay entradas'),
+                    )
+                  : SizedBox(),
               ...journals
                   .map(
                     (e) => JournalCard(

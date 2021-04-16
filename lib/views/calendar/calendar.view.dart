@@ -38,9 +38,8 @@ class _CalendarViewState extends State<CalendarView> {
   onDayPressed(DateTime date) async {
     Map<DateTime, List<ExpansionPanelItem>> _events = {};
 
-    ResponseJournalByDate response = await requestJournalsByDate(
-        anio: date.year, mes: date.month, dia: date.day);
-    response.agno.forEach((element) {
+    List<ResponseJournals> response = await requestJournals();
+    response.forEach((element) {
       ExpansionPanelItem expansionPanelItem = ExpansionPanelItem(
           title: Text(element.titulo == null ? 'Sin título' : element.titulo),
           subtitle: Text(
