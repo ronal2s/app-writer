@@ -76,6 +76,14 @@ Future<ResponseGratitud> requestGratitud() async {
   return responseGratitud;
 }
 
+Future<ResponseGratitudRecords> requestGratitudRecord() async {
+  String userId = await getPrefs(key: SecureKeys.userId.value);
+  final response = await http.get('$URL_API/historial/gratitud/$userId');
+  ResponseGratitudRecords responseGratitudRecords =
+      ResponseGratitudRecords.fromJson(response.body);
+  return responseGratitudRecords;
+}
+
 Future<ResponseError> sendRespondGratitud(
     RespondGratitud respondGratitud) async {
   String userId = await getPrefs(key: SecureKeys.userId.value);
@@ -104,7 +112,6 @@ Future<ResponseGraphs> requestGraphsData(
     {@required int anio, @required int mes, @required int dia}) async {
   String userId = await getPrefs(key: SecureKeys.userId.value);
   var response;
-  print('HOLAAAA!!');
   if (anio != null) {
     response = await http.get('$URL_API/grafica/agno/$userId/$anio');
   }
@@ -114,7 +121,6 @@ Future<ResponseGraphs> requestGraphsData(
   if (dia != null) {
     response = await http.get('$URL_API/grafica/fecha/$userId/$anio/$mes/$dia');
   }
-  print(response.body);
   ResponseGraphs responseGraphs = ResponseGraphs.fromJson(response.body);
   return responseGraphs;
 }

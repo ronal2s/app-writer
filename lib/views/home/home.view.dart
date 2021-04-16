@@ -56,7 +56,7 @@ class HomeView extends StatelessWidget {
           ),
           SizedBox(height: DEFAULT_SPACE * 4),
           HomeButton(
-            icon: Icons.clean_hands_outlined,
+            icon: Icons.favorite,
             text: 'Baúl de gratitud',
             onPressed: () {
               pushView(context, view: BaulWelcomeView());

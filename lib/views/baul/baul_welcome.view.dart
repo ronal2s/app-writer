@@ -1,6 +1,7 @@
 import 'package:cuts/utils/const.dart';
 import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/baul/baul.view.dart';
+import 'package:cuts/views/baul/baul_record.view.dart';
 import 'package:cuts/widgets/elevated_button.dart';
 import 'package:cuts/widgets/text.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,13 @@ class BaulWelcomeView extends StatelessWidget {
               text: 'Iniciar práctica',
               onPressed: () {
                 pushView(context, view: BaulView());
+              },
+            ),
+            SizedBox(height: DEFAULT_SPACE),
+            MyElevatedButton(
+              text: 'Ver prácticas anteriores',
+              onPressed: () {
+                pushView(context, view: BaulRecordView());
               },
             ),
           ],

@@ -620,22 +620,22 @@ class ResponseJournalByDate {
 class ResponseGraphs {
   List<GraphData> data;
   bool error;
-  String message;
+  String mensaje;
   ResponseGraphs({
     this.data,
     this.error,
-    this.message,
+    this.mensaje,
   });
 
   ResponseGraphs copyWith({
     List<GraphData> data,
     bool error,
-    String message,
+    String mensaje,
   }) {
     return ResponseGraphs(
       data: data ?? this.data,
       error: error ?? this.error,
-      message: message ?? this.message,
+      mensaje: mensaje ?? this.mensaje,
     );
   }
 
@@ -643,7 +643,7 @@ class ResponseGraphs {
     return {
       'data': data?.map((x) => x.toMap())?.toList(),
       'error': error,
-      'message': message,
+      'mensaje': mensaje,
     };
   }
 
@@ -651,7 +651,7 @@ class ResponseGraphs {
     return ResponseGraphs(
       data: List<GraphData>.from(map['data']?.map((x) => GraphData.fromMap(x))),
       error: map['error'],
-      message: map['message'],
+      mensaje: map['mensaje'],
     );
   }
 
@@ -662,7 +662,7 @@ class ResponseGraphs {
 
   @override
   String toString() =>
-      'ResponseGraphs(data: $data, error: $error, message: $message)';
+      'ResponseGraphs(data: $data, error: $error, mensaje: $mensaje)';
 
   @override
   bool operator ==(Object other) {
@@ -671,11 +671,11 @@ class ResponseGraphs {
     return other is ResponseGraphs &&
         listEquals(other.data, data) &&
         other.error == error &&
-        other.message == message;
+        other.mensaje == mensaje;
   }
 
   @override
-  int get hashCode => data.hashCode ^ error.hashCode ^ message.hashCode;
+  int get hashCode => data.hashCode ^ error.hashCode ^ mensaje.hashCode;
 }
 
 class GraphData {
@@ -729,4 +729,127 @@ class GraphData {
 
   @override
   int get hashCode => emocion.hashCode ^ porciento.hashCode;
+}
+
+class ResponseGratitudRecords {
+  List<GratitudOne> data;
+  bool error;
+  String message;
+  ResponseGratitudRecords({
+    this.data,
+    this.error,
+    this.message,
+  });
+
+  ResponseGratitudRecords copyWith({
+    List<GratitudOne> data,
+    bool error,
+    String message,
+  }) {
+    return ResponseGratitudRecords(
+      data: data ?? this.data,
+      error: error ?? this.error,
+      message: message ?? this.message,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'data': data?.map((x) => x.toMap())?.toList(),
+      'error': error,
+      'message': message,
+    };
+  }
+
+  factory ResponseGratitudRecords.fromMap(Map<String, dynamic> map) {
+    return ResponseGratitudRecords(
+      data: List<GratitudOne>.from(
+          map['data']?.map((x) => GratitudOne.fromMap(x))),
+      error: map['error'],
+      message: map['message'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ResponseGratitudRecords.fromJson(String source) =>
+      ResponseGratitudRecords.fromMap(json.decode(source));
+
+  @override
+  String toString() =>
+      'ResponseGratitudRecords(data: $data, error: $error, message: $message)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ResponseGratitudRecords &&
+        listEquals(other.data, data) &&
+        other.error == error &&
+        other.message == message;
+  }
+
+  @override
+  int get hashCode => data.hashCode ^ error.hashCode ^ message.hashCode;
+}
+
+class GratitudOne {
+  String fecha;
+  String pregunta;
+  String respuesta;
+  GratitudOne({
+    this.fecha,
+    this.pregunta,
+    this.respuesta,
+  });
+
+  GratitudOne copyWith({
+    String fecha,
+    String pregunta,
+    String respuesta,
+  }) {
+    return GratitudOne(
+      fecha: fecha ?? this.fecha,
+      pregunta: pregunta ?? this.pregunta,
+      respuesta: respuesta ?? this.respuesta,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'fecha': fecha,
+      'pregunta': pregunta,
+      'respuesta': respuesta,
+    };
+  }
+
+  factory GratitudOne.fromMap(Map<String, dynamic> map) {
+    return GratitudOne(
+      fecha: map['fecha'],
+      pregunta: map['pregunta'],
+      respuesta: map['respuesta'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory GratitudOne.fromJson(String source) =>
+      GratitudOne.fromMap(json.decode(source));
+
+  @override
+  String toString() =>
+      'GratitudOne(fecha: $fecha, pregunta: $pregunta, respuesta: $respuesta)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is GratitudOne &&
+        other.fecha == fecha &&
+        other.pregunta == pregunta &&
+        other.respuesta == respuesta;
+  }
+
+  @override
+  int get hashCode => fecha.hashCode ^ pregunta.hashCode ^ respuesta.hashCode;
 }

@@ -1,4 +1,5 @@
 import 'package:cuts/views/graphs/graphs.dart';
+import 'package:cuts/widgets/dropdownField.dart';
 import 'package:cuts/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:cuts/api/api.dart';
@@ -17,27 +18,55 @@ class _RecordViewState extends State<RecordView> {
   DateTime date = DateTime.now();
   List graphsYearly = [];
   List graphsMonth = [];
-  // List graphsDay = [];
+  List graphsToday = [];
+  List graphsAll = [];
   double pieWidth = 50;
+
+  String filterType = 'Este año';
+  Map month = {
+    'label': getMonthByNumber(DateTime.now().month),
+    'value': DateTime.now().month
+  };
+  int year = DateTime.now().year;
 
   @override
   void initState() {
     super.initState();
     getDataYearly(anio: date.year);
-    getDataYearly(anio: date.year, mes: date.month);
+    // getDataYearly(anio: date.year, mes: date.month);
+    // getDataYearly(anio: date.year, mes: date.month, dia: date.day);
   }
 
   getDataYearly({@required int anio, int mes, int dia}) async {
+    print('anio: $anio, mes: $mes, dia: $dia');
+    setState(() {
+      loading = true;
+    });
     ResponseGraphs responseGraphs =
         await requestGraphsData(anio: anio, mes: mes, dia: dia);
+    // print(responseGraphs.data);
     if (responseGraphs.error) {
       showSnackBar(
         context,
-        content: Text(responseGraphs.message),
+        content: Text(responseGraphs.mensaje),
         color: Colors.red,
       );
+      setState(() {
+        graphsAll = [];
+        if (anio != null) {
+          graphsYearly = [];
+        }
+        if (mes != null) {
+          graphsMonth = [];
+        }
+        if (dia != null) {
+          graphsToday = [];
+        }
+        loading = false;
+      });
     } else {
       setState(() {
+        graphsAll = responseGraphs.data;
         if (anio != null) {
           graphsYearly = responseGraphs.data;
         }
@@ -45,11 +74,57 @@ class _RecordViewState extends State<RecordView> {
           graphsMonth = responseGraphs.data;
         }
         if (dia != null) {
-          // grap = responseGraphs.data;
+          graphsToday = responseGraphs.data;
         }
         loading = false;
       });
     }
+  }
+
+  reorderData() {
+    if (filterType == 'Año') {
+      getDataYearly(anio: year);
+    }
+    if (filterType == 'Este año') {
+      getDataYearly(anio: date.year);
+    }
+    if (filterType == 'Hoy') {
+      getDataYearly(anio: date.year, mes: date.month, dia: date.day);
+    }
+    if (filterType == 'Mes') {
+      getDataYearly(anio: year, mes: month['value'] + 1);
+    }
+    // if (filterType == 'Hoy') {
+    //   int today = DateTime.now().day;
+    //   List<ResponseJournals> list = [];
+    //   journalsBackup.forEach((element) {
+    //     int elementDay = int.parse(element.fecha.split('/')[0]);
+    //     if (elementDay == today) {
+    //       list.add(element);
+    //     }
+    //   });
+    //   setState(() {
+    //     journals = list;
+    //   });
+    // }
+    // if (filterType == 'Mes') {
+    //   List<ResponseJournals> list = [];
+    //   journalsBackup.forEach((element) {
+    //     int elementYear = int.parse(element.fecha.split('/')[2]);
+    //     int elementMonth = int.parse(element.fecha.split('/')[1]);
+    //     if (year == elementYear && month['value'] + 1 == elementMonth) {
+    //       list.add(element);
+    //     }
+    //   });
+    //   setState(() {
+    //     journals = list;
+    //   });
+    // }
+    // if (filterType == 'Este año') {
+    //   setState(() {
+    //     journals = journalsBackup;
+    //   });
+    // }
   }
 
   getSeriesData(String idChart, List list) {
@@ -81,41 +156,124 @@ class _RecordViewState extends State<RecordView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               loading ? CircularProgressIndicator() : SizedBox(),
+              SizedBox(height: DEFAULT_SPACE),
+              MyDropdownField(
+                label: 'Filtro',
+                items: ['Este año', 'Hoy', 'Mes', 'Año'],
+                onChanged: (value) {
+                  setState(() {
+                    filterType = value;
+                  });
+                  if (value == 'Este año' || value == 'Hoy') {
+                    reorderData();
+                  } else {
+                    // month = {
+                    //   'label': getMonthByNumber(date.month + 1),
+                    //   'value': getMonthByName(date.mon)
+                    // };
+                    year = date.year;
+                  }
+                },
+                border: OutlineInputBorder(),
+              ),
+              filterType == 'Mes'
+                  ? Column(
+                      children: [
+                        SizedBox(height: DEFAULT_SPACE),
+                        MyDropdownField(
+                          label: 'Mes',
+                          items: getMonths(),
+                          onChanged: (value) {
+                            month = {
+                              'label': value,
+                              'value': getMonthByName(value)
+                            };
+                            reorderData();
+                          },
+                          border: OutlineInputBorder(),
+                        ),
+                      ],
+                    )
+                  : SizedBox(),
+              filterType == 'Año' || filterType == 'Mes'
+                  ? Column(
+                      children: [
+                        SizedBox(height: DEFAULT_SPACE),
+                        MyDropdownField(
+                          value: year.toString(),
+                          label: 'Año',
+                          items: getYears(from: 2000, to: 2021),
+                          onChanged: (value) {
+                            year = int.parse(value);
+                            reorderData();
+                          },
+                          border: OutlineInputBorder(),
+                        ),
+                      ],
+                    )
+                  : SizedBox(),
+              SizedBox(height: DEFAULT_SPACE),
               MyText(
-                'Emociones por año',
+                'Emociones de ${filterType.toLowerCase()}',
                 color: PRIMARY_COLOR,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
-              SizedBox(
-                height: size.height * 0.35,
-                child: charts.PieChart(
-                  getSeriesData('yearly', graphsYearly),
-                  animate: true,
-                  defaultRenderer: new charts.ArcRendererConfig(
-                      // arcWidth: pieWidth.round(),
-                      arcRendererDecorators: [new charts.ArcLabelDecorator()]),
-                ),
-              ),
-              MyText(
-                'Emociones por mes',
-                color: PRIMARY_COLOR,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-              SizedBox(
-                height: size.height * 0.35,
-                child: charts.PieChart(
-                  getSeriesData('yearly', graphsMonth),
-                  animate: true,
-                  defaultRenderer: new charts.ArcRendererConfig(
-                    // arcWidth: pieWidth.round(),
-                    arcRendererDecorators: [
-                      charts.ArcLabelDecorator(),
-                    ],
-                  ),
-                ),
-              ),
+              graphsAll.length > 0
+                  ? SizedBox(
+                      height: size.height * 0.35,
+                      child: charts.PieChart(
+                        getSeriesData('today', graphsAll),
+                        animate: true,
+                        defaultRenderer: new charts.ArcRendererConfig(
+                          // arcWidth: pieWidth.round(),
+                          arcRendererDecorators: [
+                            charts.ArcLabelDecorator(),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Column(
+                      children: [
+                        MyText('Hoy no hay nada que mostrar'),
+                        SizedBox(height: DEFAULT_SPACE),
+                      ],
+                    ),
+              // MyText(
+              //   'Emociones de este año',
+              //   color: PRIMARY_COLOR,
+              //   fontWeight: FontWeight.bold,
+              //   fontSize: 16,
+              // ),
+              // SizedBox(
+              //   height: size.height * 0.35,
+              //   child: charts.PieChart(
+              //     getSeriesData('yearly', graphsYearly),
+              //     animate: false,
+              //     defaultRenderer: new charts.ArcRendererConfig(
+              //         // arcWidth: pieWidth.round(),
+              //         arcRendererDecorators: [new charts.ArcLabelDecorator()]),
+              //   ),
+              // ),
+              // MyText(
+              //   'Emociones de este mes',
+              //   color: PRIMARY_COLOR,
+              //   fontWeight: FontWeight.bold,
+              //   fontSize: 16,
+              // ),
+              // SizedBox(
+              //   height: size.height * 0.35,
+              //   child: charts.PieChart(
+              //     getSeriesData('monthly', graphsMonth),
+              //     animate: false,
+              //     defaultRenderer: new charts.ArcRendererConfig(
+              //       // arcWidth: pieWidth.round(),
+              //       arcRendererDecorators: [
+              //         charts.ArcLabelDecorator(),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
