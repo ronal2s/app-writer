@@ -1,3 +1,5 @@
+import 'package:cuts/api/api.dart';
+import 'package:cuts/api/api_models.dart';
 import 'package:cuts/utils/const.dart';
 import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/home/components/home_button.dart';
@@ -8,7 +10,37 @@ import 'package:cuts/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class PhrasesView extends StatelessWidget {
+class PhrasesView extends StatefulWidget {
+  @override
+  _PhrasesViewState createState() => _PhrasesViewState();
+}
+
+class _PhrasesViewState extends State<PhrasesView> {
+  List<Phrase> phrases = [];
+  bool loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    ResponsePhrases responsePhrases = await requestPhrases();
+    if (responsePhrases.error) {
+      showSnackBar(context,
+          content: Text(responsePhrases.message), color: Colors.red);
+      setState(() {
+        loading = false;
+      });
+    } else {
+      setState(() {
+        phrases = responsePhrases.data;
+        loading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -57,7 +89,7 @@ class PhrasesView extends StatelessWidget {
         title: Text('Frases'),
       ),
       body: Container(
-        // width: double.infinity,
+        width: double.infinity,
         padding: EdgeInsets.all(DEFAULT_PADDING),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
@@ -76,18 +108,10 @@ class PhrasesView extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Wrap(
                 children: [
-                  PhraseCard(
-                    text:
-                        'Cuando te levantes por la mañana, piensa en el precioso privilegio de estar vivo, respirar, pensar, disfrutar y amar.\n\n Marco Aurelio.',
-                  ),
-                  PhraseCard(
-                    text:
-                        'Cuando te levantes por la mañana, piensa en el precioso privilegio de estar vivo, respirar, pensar, disfrutar y amar.\n\n Marco Aurelio.',
-                  ),
-                  PhraseCard(
-                    text:
-                        'Cuando te levantes por la mañana, piensa en el precioso privilegio de estar vivo, respirar, pensar, disfrutar y amar.\n\n Marco Aurelio.',
-                  ),
+                  loading? CircularProgressIndicator(): SizedBox(),
+                  ...phrases.map(
+                    (e) => PhraseCard(text: '${e.frase}\n\n${e.autor}'),
+                  )
                 ],
               ),
             ),

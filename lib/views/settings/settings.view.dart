@@ -16,21 +16,38 @@ class SettingsView extends StatelessWidget {
 
     void showAccountInfo() async {
       String fullname = await getPrefs(key: SecureKeys.fullname.value);
+      String email = await getPrefs(key: SecureKeys.email.value);
+      String birthDate = await getPrefs(key: SecureKeys.birthDate.value);
       showAlert(context,
           title: 'Información de la cuenta',
           content: SizedBox(
-            height: size.height * 0.17,
+            height: size.height * 0.35,
             child: Column(
               children: [
                 MyTextField(
+                  readOnly: true,
                   initialValue: fullname,
                   label: 'Nombre',
                   border: OutlineInputBorder(),
                 ),
                 SizedBox(height: DEFAULT_SPACE),
+                MyTextField(
+                  readOnly: true,
+                  initialValue: email,
+                  label: 'Correo electrónico',
+                  border: OutlineInputBorder(),
+                ),
+                // SizedBox(height: DEFAULT_SPACE),
+                // MyTextField(
+                //   readOnly: true,
+                //   initialValue: birthDate,
+                //   label: 'Fecha de nacimiento',
+                //   border: OutlineInputBorder(),
+                // ),
+                SizedBox(height: DEFAULT_SPACE),
                 MyElevatedButton(
                   fullWidth: true,
-                  text: 'Guardar cambios',
+                  text: 'Cerrar',
                   onPressed: () {
                     popView(context);
                   },

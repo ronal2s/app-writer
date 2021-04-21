@@ -138,3 +138,10 @@ Future<ResponseGraphs> requestGraphsData(
   ResponseGraphs responseGraphs = ResponseGraphs.fromJson(response.body);
   return responseGraphs;
 }
+
+Future<ResponsePhrases> requestPhrases() async {
+  final response = await http.get('$URL_API/frases');
+  ResponsePhrases responsePhrases = ResponsePhrases.fromJson(response.body);
+  print(responsePhrases.toString());
+  return responsePhrases;
+}

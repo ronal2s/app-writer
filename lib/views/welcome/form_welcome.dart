@@ -50,6 +50,14 @@ class _FormWelcomeState extends State<FormWelcome> {
           key: SecureKeys.fullname.value,
           value: response.fullname.toString(),
         );
+        savePrefs(
+          key: SecureKeys.email.value,
+          value: response.correo,
+        );
+        savePrefs(
+          key: SecureKeys.birthDate.value,
+          value: response.fechaNacimiento,
+        );
         replaceView(context, view: ContainerView());
       } else {
         showSnackBar(

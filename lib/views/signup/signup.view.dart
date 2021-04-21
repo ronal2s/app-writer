@@ -86,7 +86,6 @@ class _SignUpViewState extends State<SignUpView> {
                             child: MyTextField(
                               label: "Nombres",
                               border: InputBorder.none,
-                              keyboardType: TextInputType.number,
                               isRequired: true,
                               icon: Icon(Icons.person, color: PRIMARY_COLOR),
                               onSaved: (value) => user.nombre = value,
@@ -96,7 +95,6 @@ class _SignUpViewState extends State<SignUpView> {
                             child: MyTextField(
                               label: "Apellidos",
                               border: InputBorder.none,
-                              keyboardType: TextInputType.number,
                               isRequired: true,
                               icon: Icon(Icons.person, color: PRIMARY_COLOR),
                               onSaved: (value) => user.apellido = value,
@@ -106,7 +104,7 @@ class _SignUpViewState extends State<SignUpView> {
                             child: MyTextField(
                               label: "Correo",
                               border: InputBorder.none,
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.emailAddress,
                               isRequired: true,
                               icon: Icon(Icons.email, color: PRIMARY_COLOR),
                               onSaved: (value) => user.correo = value,

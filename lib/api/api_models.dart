@@ -33,11 +33,15 @@ class RequestLogin {
 
 class ResponseLogin {
   String fullname;
+  String correo;
+  String fechaNacimiento;
   bool error;
   String nameError;
   int idUsuario;
   ResponseLogin({
     this.fullname,
+    this.correo,
+    this.fechaNacimiento,
     this.error,
     this.nameError,
     this.idUsuario,
@@ -46,6 +50,8 @@ class ResponseLogin {
   Map<String, dynamic> toMap() {
     return {
       'fullname': fullname,
+      'correo': correo,
+      'fechaNacimiento': fechaNacimiento,
       'error': error,
       'nameError': nameError,
       'idUsuario': idUsuario,
@@ -55,6 +61,8 @@ class ResponseLogin {
   factory ResponseLogin.fromMap(Map<String, dynamic> map) {
     return ResponseLogin(
       fullname: map['fullname'],
+      correo: map['correo'],
+      fechaNacimiento: map['fechaNacimiento'],
       error: map['error'],
       nameError: map['nameError'],
       idUsuario: map['idUsuario'],
@@ -68,12 +76,16 @@ class ResponseLogin {
 
   ResponseLogin copyWith({
     String fullname,
+    String correo,
+    String fechaNacimiento,
     bool error,
     String nameError,
     int idUsuario,
   }) {
     return ResponseLogin(
       fullname: fullname ?? this.fullname,
+      correo: correo ?? this.correo,
+      fechaNacimiento: fechaNacimiento ?? this.fechaNacimiento,
       error: error ?? this.error,
       nameError: nameError ?? this.nameError,
       idUsuario: idUsuario ?? this.idUsuario,
@@ -82,26 +94,30 @@ class ResponseLogin {
 
   @override
   String toString() {
-    return 'ResponseLogin(fullname: $fullname, error: $error, nameError: $nameError, idUsuario: $idUsuario)';
+    return 'ResponseLogin(fullname: $fullname, correo: $correo, fechaNacimiento: $fechaNacimiento, error: $error, nameError: $nameError, idUsuario: $idUsuario)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
+  
     return other is ResponseLogin &&
-        other.fullname == fullname &&
-        other.error == error &&
-        other.nameError == nameError &&
-        other.idUsuario == idUsuario;
+      other.fullname == fullname &&
+      other.correo == correo &&
+      other.fechaNacimiento == fechaNacimiento &&
+      other.error == error &&
+      other.nameError == nameError &&
+      other.idUsuario == idUsuario;
   }
 
   @override
   int get hashCode {
     return fullname.hashCode ^
-        error.hashCode ^
-        nameError.hashCode ^
-        idUsuario.hashCode;
+      correo.hashCode ^
+      fechaNacimiento.hashCode ^
+      error.hashCode ^
+      nameError.hashCode ^
+      idUsuario.hashCode;
   }
 }
 
@@ -852,4 +868,115 @@ class GratitudOne {
 
   @override
   int get hashCode => fecha.hashCode ^ pregunta.hashCode ^ respuesta.hashCode;
+}
+
+class ResponsePhrases {
+  List<Phrase> data;
+  bool error;
+  String message;
+  ResponsePhrases({
+    this.data,
+    this.error,
+    this.message,
+  });
+
+  ResponsePhrases copyWith({
+    List<Phrase> data,
+    bool error,
+    String message,
+  }) {
+    return ResponsePhrases(
+      data: data ?? this.data,
+      error: error ?? this.error,
+      message: message ?? this.message,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'data': data?.map((x) => x.toMap())?.toList(),
+      'error': error,
+      'message': message,
+    };
+  }
+
+  factory ResponsePhrases.fromMap(Map<String, dynamic> map) {
+    return ResponsePhrases(
+      data: List<Phrase>.from(map['data']?.map((x) => Phrase.fromMap(x))),
+      error: map['error'],
+      message: map['message'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ResponsePhrases.fromJson(String source) => ResponsePhrases.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'ResponsePhrases(data: $data, error: $error, message: $message)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is ResponsePhrases &&
+      listEquals(other.data, data) &&
+      other.error == error &&
+      other.message == message;
+  }
+
+  @override
+  int get hashCode => data.hashCode ^ error.hashCode ^ message.hashCode;
+}
+
+class Phrase {
+  String autor;
+  String frase;
+  Phrase({
+    this.autor,
+    this.frase,
+  });
+
+  Phrase copyWith({
+    String autor,
+    String frase,
+  }) {
+    return Phrase(
+      autor: autor ?? this.autor,
+      frase: frase ?? this.frase,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'autor': autor,
+      'frase': frase,
+    };
+  }
+
+  factory Phrase.fromMap(Map<String, dynamic> map) {
+    return Phrase(
+      autor: map['autor'],
+      frase: map['frase'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Phrase.fromJson(String source) => Phrase.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'Phrase(autor: $autor, frase: $frase)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is Phrase &&
+      other.autor == autor &&
+      other.frase == frase;
+  }
+
+  @override
+  int get hashCode => autor.hashCode ^ frase.hashCode;
 }

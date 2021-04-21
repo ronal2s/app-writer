@@ -3,6 +3,7 @@ import 'package:cuts/api/api_models.dart';
 import 'package:cuts/utils/const.dart';
 import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/journal/components/journal_card.dart';
+import 'package:cuts/views/journal/journal_form.view.dart';
 import 'package:cuts/widgets/dropdownField.dart';
 import 'package:flutter/material.dart';
 
@@ -99,6 +100,11 @@ class _JournalRecordState extends State<JournalRecord> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Entradas'),
+        actions: [
+          IconButton(icon: Icon(Icons.add), onPressed: () {
+            pushView(context, view: JournalForm());
+          })
+        ],
       ),
       body: Container(
         width: double.infinity,

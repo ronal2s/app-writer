@@ -3,6 +3,8 @@ enum SecureKeys {
   accountKey,
   subscriptionType,
   fullname,
+  email,
+  birthDate
 }
 
 extension SecureKeysExtension on SecureKeys {
@@ -10,7 +12,8 @@ extension SecureKeysExtension on SecureKeys {
     SecureKeys.accountKey: 'accountKey',
     SecureKeys.userId: 'userId',
     SecureKeys.subscriptionType: 'subscriptionType',
-    SecureKeys.fullname: 'fullname'
+    SecureKeys.email: 'email',
+    SecureKeys.birthDate: 'birthDate'
   };
 
   String get value => values[this];
