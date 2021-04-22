@@ -145,3 +145,11 @@ Future<ResponsePhrases> requestPhrases() async {
   print(responsePhrases.toString());
   return responsePhrases;
 }
+
+Future<ResponseAbsolutismo> requestAbsolutismo() async {
+  String userId = await getPrefs(key: SecureKeys.userId.value);
+  final response = await http.get('$URL_API/absolutismo/$userId');
+  ResponseAbsolutismo responseAbsolutismo = ResponseAbsolutismo.fromJson(response.body);
+  print(responseAbsolutismo.toString());
+  return responseAbsolutismo;
+}

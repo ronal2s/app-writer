@@ -1,3 +1,5 @@
+import 'package:cuts/api/api.dart';
+import 'package:cuts/api/api_models.dart';
 import 'package:cuts/utils/const.dart';
 import 'package:cuts/utils/functions.dart';
 import 'package:cuts/views/calendar/calendar.view.dart';
@@ -26,6 +28,25 @@ class _ContainerViewState extends State<ContainerView> {
     SizedBox(),
   ];
   int actualView = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    ResponseAbsolutismo responseAbsolutismo = await requestAbsolutismo();
+    if (!responseAbsolutismo.error) {
+      if (responseAbsolutismo.data.length > 0) {
+        showAlert(
+          context,
+          title: 'Recuerda:',
+          content: MyText(responseAbsolutismo.data[0]),
+        );
+      }
+    }
+  }
 
   void toGraphs() {
     setState(() => actualView = 1);

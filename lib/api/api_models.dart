@@ -980,3 +980,62 @@ class Phrase {
   @override
   int get hashCode => autor.hashCode ^ frase.hashCode;
 }
+
+class ResponseAbsolutismo {
+  bool error;
+  List<String> data;
+  String message;
+  ResponseAbsolutismo({
+    this.error,
+    this.data,
+    this.message,
+  });
+
+  ResponseAbsolutismo copyWith({
+    bool error,
+    List<String> data,
+    String message,
+  }) {
+    return ResponseAbsolutismo(
+      error: error ?? this.error,
+      data: data ?? this.data,
+      message: message ?? this.message,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'error': error,
+      'data': data,
+      'message': message,
+    };
+  }
+
+  factory ResponseAbsolutismo.fromMap(Map<String, dynamic> map) {
+    return ResponseAbsolutismo(
+      error: map['error'],
+      data: List<String>.from(map['data']),
+      message: map['message'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ResponseAbsolutismo.fromJson(String source) => ResponseAbsolutismo.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'ResponseAbsolutismo(error: $error, data: $data, message: $message)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+  
+    return other is ResponseAbsolutismo &&
+      other.error == error &&
+      listEquals(other.data, data) &&
+      other.message == message;
+  }
+
+  @override
+  int get hashCode => error.hashCode ^ data.hashCode ^ message.hashCode;
+}
