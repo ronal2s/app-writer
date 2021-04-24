@@ -58,7 +58,7 @@ class _JournalFormState extends State<JournalForm> {
             popView(context);
           } else {
             showSnackBar(context,
-                content: Text('Ha ocurrido un error'), color: Colors.red);
+                content: Text('Escribe al menos 2 palabras.'), color: Colors.red);
           }
           setState(() {
             loading = false;
@@ -133,7 +133,7 @@ class _JournalFormState extends State<JournalForm> {
                         initialValue: journalModel.sentimiento,
                         isRequired: true,
                         border: OutlineInputBorder(),
-                        label: 'Sentimientos',
+                        label: 'Sentimiento',
                         onSaved: (value) {
                           journalModel.sentimiento = value;
                         },

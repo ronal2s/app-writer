@@ -52,6 +52,7 @@ class BaulWelcomeView extends StatelessWidget {
                 pushView(context, view: BaulRecordView());
               },
             ),
+            SizedBox(height: DEFAULT_SPACE*5),
           ],
         ),
       ),

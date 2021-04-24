@@ -110,7 +110,7 @@ class _PhrasesViewState extends State<PhrasesView> {
                 children: [
                   loading? CircularProgressIndicator(): SizedBox(),
                   ...phrases.map(
-                    (e) => PhraseCard(text: '${e.frase}\n\n${e.autor}'),
+                    (e) => PhraseCard(text: '${e.frase}\n\n— ${e.autor}'),
                   )
                 ],
               ),

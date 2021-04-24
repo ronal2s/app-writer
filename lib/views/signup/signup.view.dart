@@ -39,7 +39,7 @@ class _SignUpViewState extends State<SignUpView> {
     void newAccount() async {
       if (formKey.currentState.validate()) {
         formKey.currentState.save();
-        user.fechaNacimiento = '1990-01-01';
+        // user.fecha_nacimiento = '1990-01-01';
         ResponseError responseError = await requestSignup(userModel: user);
         if (responseError.error) {
           showSnackBar(

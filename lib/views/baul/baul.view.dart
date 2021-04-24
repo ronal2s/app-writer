@@ -62,18 +62,31 @@ class _BaulViewState extends State<BaulView> {
         setState(() {
           loadingSendingResponse = true;
         });
-        questions.forEach((element) async {
+        for (var i = 0; i < questions.length; i++) {
+          PracticaGratitud element = questions[i];
           RespondGratitud respondGratitud = RespondGratitud(
             idPract: element.idPract,
             texto: answers[element.pregunta],
           );
-          ResponseError response = await sendRespondGratitud(respondGratitud);
-          showSnackBar(
-            context,
-            content: Text(response.message),
-            color: Colors.green,
-          );
-        });
+          if (answers[element.pregunta].length > 0) {
+            ResponseError response = await sendRespondGratitud(respondGratitud);
+            if (i == questions.length - 1 || response.error) {
+              if (!response.error) {
+                showSnackBar(
+                  context,
+                  content: Text(response.message),
+                  color: Colors.green,
+                );
+              } else {
+                showSnackBar(
+                  context,
+                  content: Text(response.nameError),
+                  color: Colors.red,
+                );
+              }
+            }
+          }
+        }
         setState(() {
           loadingSendingResponse = false;
         });
@@ -126,7 +139,7 @@ class _BaulViewState extends State<BaulView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Baul de los recuerdos'),
+        title: Text('Baúl de gratitud'),
       ),
       body: KeyboardContainer(
         child: Container(

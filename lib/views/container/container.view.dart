@@ -90,38 +90,41 @@ class _ContainerViewState extends State<ContainerView> {
       headerHeight: size.height * 0.75,
       appBar: BackdropAppBar(
         title: Text('Inicio'),
-        actions: [
-          PopupMenuButton(
-            onSelected: (value) => value['onPressed'](),
-            itemBuilder: (context) {
-              return menuItems
-                  .map((item) => PopupMenuItem(
-                        value: item,
-                        child: item['child'],
-                      ))
-                  .toList();
-            },
-          ),
-        ],
+        // actions: [
+        //   PopupMenuButton(
+        //     onSelected: (value) => value['onPressed'](),
+        //     itemBuilder: (context) {
+        //       return menuItems
+        //           .map((item) => PopupMenuItem(
+        //                 value: item,
+        //                 child: item['child'],
+        //               ))
+        //           .toList();
+        //     },
+        //   ),
+        // ],
       ),
       backLayer: Container(
         child: SizedBox(
           width: double.infinity,
           child: Wrap(
             alignment: WrapAlignment.center,
-            spacing: 10,
+            spacing: 20,
             children: [
-              CircleButton(
-                text: MyText(
-                  'Inicio',
-                  fontSize: 12,
-                ),
-                icon: Icon(
-                  Icons.home,
-                  color: PRIMARY_COLOR,
-                ),
-                color: SECONDARY_COLOR,
-              ),
+              // CircleButton(
+              //   text: MyText(
+              //     'Inicio',
+              //     fontSize: 12,
+              //   ),
+              //   icon: Icon(
+              //     Icons.home,
+              //     color: PRIMARY_COLOR,
+              //   ),
+              //   color: SECONDARY_COLOR,
+              //   onPressed: () {
+                  
+              //   },
+              // ),
               CircleButton(
                 text: MyText(
                   'Historial',

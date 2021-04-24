@@ -240,41 +240,22 @@ class _RecordViewState extends State<RecordView> {
                         SizedBox(height: DEFAULT_SPACE),
                       ],
                     ),
-              // MyText(
-              //   'Emociones de este año',
-              //   color: PRIMARY_COLOR,
-              //   fontWeight: FontWeight.bold,
-              //   fontSize: 16,
-              // ),
-              // SizedBox(
-              //   height: size.height * 0.35,
-              //   child: charts.PieChart(
-              //     getSeriesData('yearly', graphsYearly),
-              //     animate: false,
-              //     defaultRenderer: new charts.ArcRendererConfig(
-              //         // arcWidth: pieWidth.round(),
-              //         arcRendererDecorators: [new charts.ArcLabelDecorator()]),
-              //   ),
-              // ),
-              // MyText(
-              //   'Emociones de este mes',
-              //   color: PRIMARY_COLOR,
-              //   fontWeight: FontWeight.bold,
-              //   fontSize: 16,
-              // ),
-              // SizedBox(
-              //   height: size.height * 0.35,
-              //   child: charts.PieChart(
-              //     getSeriesData('monthly', graphsMonth),
-              //     animate: false,
-              //     defaultRenderer: new charts.ArcRendererConfig(
-              //       // arcWidth: pieWidth.round(),
-              //       arcRendererDecorators: [
-              //         charts.ArcLabelDecorator(),
-              //       ],
-              //     ),
-              //   ),
-              // ),
+              SizedBox(height: DEFAULT_SPACE),
+              ...graphsAll.map(
+                (e) => Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    MyText(
+                      '${toCapitalize(e.emocion)} ${e.porciento}%',
+                      color: PRIMARY_COLOR,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      // textAlign: TextAlign.start,
+                    ),
+                    SizedBox(height: DEFAULT_SPACE),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
