@@ -9,7 +9,12 @@ import 'package:http/http.dart' as http;
 import 'package:cuts/api/api_models.dart';
 import 'package:flutter/material.dart';
 
-const header = {'Content-Type': 'application/json', 'Connection': 'keep-alive'};
+const header = {
+  'Content-Type': 'application/json',
+  'Connection': 'keep-alive',
+    // 'Access-Control-Allow-Origin': '*',
+
+};
 
 Future<ResponseLogin> requestLogin({@required RequestLogin loginModel}) async {
   print(loginModel.toJson());
@@ -149,7 +154,8 @@ Future<ResponsePhrases> requestPhrases() async {
 Future<ResponseAbsolutismo> requestAbsolutismo() async {
   String userId = await getPrefs(key: SecureKeys.userId.value);
   final response = await http.get('$URL_API/absolutismo/$userId');
-  ResponseAbsolutismo responseAbsolutismo = ResponseAbsolutismo.fromJson(response.body);
+  ResponseAbsolutismo responseAbsolutismo =
+      ResponseAbsolutismo.fromJson(response.body);
   print(responseAbsolutismo.toString());
   return responseAbsolutismo;
 }

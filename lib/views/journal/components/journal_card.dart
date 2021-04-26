@@ -10,6 +10,7 @@ class JournalCard extends StatelessWidget {
   final String date;
   final String feeling;
   final int id;
+  final Function refreshData;
 
   const JournalCard({
     @required this.title,
@@ -17,6 +18,7 @@ class JournalCard extends StatelessWidget {
     @required this.date,
     @required this.feeling,
     @required this.id,
+    @required this.refreshData,
   });
 
   @override
@@ -34,6 +36,7 @@ class JournalCard extends StatelessWidget {
                 content: subtitle,
                 feeling: feeling,
                 date: date,
+                refreshData: refreshData,
               ),
             );
           },

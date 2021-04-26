@@ -15,6 +15,7 @@ class JournalLecture extends StatelessWidget {
   final String date;
   final String content;
   final int id;
+  final Function refreshData;
 
   JournalLecture({
     @required this.id,
@@ -22,6 +23,7 @@ class JournalLecture extends StatelessWidget {
     @required this.feeling,
     @required this.date,
     @required this.content,
+    @required this.refreshData,
   });
 
   @override
@@ -34,8 +36,9 @@ class JournalLecture extends StatelessWidget {
           content: Text('Journal eliminado'),
           color: Colors.green,
         );
+        refreshData();
         popView(context);
-        popView(context);
+        // popView(context);
       } else {
         showSnackBar(
           context,
@@ -92,14 +95,16 @@ class JournalLecture extends StatelessWidget {
                     text: 'Editar',
                     onPressed: () {
                       JournalModel journalModel = JournalModel(
-                          titulo: title,
-                          texto: content,
-                          sentimiento: feeling,
-                          id: id);
+                        titulo: title,
+                        texto: content,
+                        sentimiento: feeling,
+                        id: id,
+                      );
                       pushView(
                         context,
                         view: JournalForm(
                           editJournalItem: journalModel,
+                          refreshData: refreshData,
                         ),
                       );
                     },

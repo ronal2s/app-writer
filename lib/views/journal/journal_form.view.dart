@@ -14,9 +14,11 @@ import 'package:lottie/lottie.dart';
 // ignore: must_be_immutable
 class JournalForm extends StatefulWidget {
   final JournalModel editJournalItem;
+  final Function refreshData;
 
   JournalForm({
     this.editJournalItem,
+    this.refreshData,
   });
 
   @override
@@ -51,14 +53,21 @@ class _JournalFormState extends State<JournalForm> {
         if (widget.editJournalItem == null) {
           ResponseError response = await createJournal(journalModel);
           if (!response.error) {
-            showSnackBar(context,
-                content: Text('Entrada creada!'), color: Colors.green);
+            showSnackBar(
+              context,
+              content: Text('Entrada creada!'),
+              color: Colors.green,
+            );
+            if (widget.refreshData is Function) {
+              widget.refreshData();
+            }
+            // popView(context);
             popView(context);
-            popView(context);
-            popView(context);
+            // popView(context);
           } else {
             showSnackBar(context,
-                content: Text('Escribe al menos 2 palabras.'), color: Colors.red);
+                content: Text('Escribe al menos 2 palabras.'),
+                color: Colors.red);
           }
           setState(() {
             loading = false;
@@ -74,9 +83,12 @@ class _JournalFormState extends State<JournalForm> {
               content: Text(response.message),
               color: Colors.green,
             );
+            if (widget.refreshData is Function) {
+              widget.refreshData();
+            }
             popView(context);
             popView(context);
-            popView(context);
+            // popView(context);
           } else {
             showSnackBar(context,
                 content: Text(response.nameError), color: Colors.red);

@@ -47,8 +47,7 @@ class _SignUpViewState extends State<SignUpView> {
             content: Text(responseError.nameError),
             color: Colors.red,
           );
-        }
-      } else {
+        } else {
         showSnackBar(
           context,
           content: Text('Usuario registrado'),
@@ -56,6 +55,7 @@ class _SignUpViewState extends State<SignUpView> {
         );
         popView(context);
       }
+      } 
     }
 
     return Scaffold(

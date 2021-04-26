@@ -101,9 +101,14 @@ class _JournalRecordState extends State<JournalRecord> {
       appBar: AppBar(
         title: Text('Entradas'),
         actions: [
-          IconButton(icon: Icon(Icons.add), onPressed: () {
-            pushView(context, view: JournalForm());
-          })
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                pushView(context,
+                    view: JournalForm(
+                      refreshData: getRecords,
+                    ));
+              })
         ],
       ),
       body: Container(
@@ -122,7 +127,10 @@ class _JournalRecordState extends State<JournalRecord> {
                     filterType = value;
                     if (value == 'Mes') {
                       year = DateTime.now().year;
-                      month = {'label': getMonthByNumber(DateTime.now().month-1), 'value': DateTime.now().month-1};
+                      month = {
+                        'label': getMonthByNumber(DateTime.now().month - 1),
+                        'value': DateTime.now().month - 1
+                      };
                     }
                   });
                   reorderData();
@@ -182,6 +190,7 @@ class _JournalRecordState extends State<JournalRecord> {
                           : 'Sin sentimiento',
                       date: e.fecha,
                       id: e.idEntrada,
+                      refreshData: getRecords,
                     ),
                   )
                   .toList(),
