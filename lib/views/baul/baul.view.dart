@@ -18,12 +18,11 @@ class BaulView extends StatefulWidget {
 }
 
 class _BaulViewState extends State<BaulView> {
+  final formKey = GlobalKey<FormState>();
   bool loading = true;
   bool loadingSendingResponse = false;
   List<PracticaGratitud> questions = [];
   Map answers = {};
-
-  final formKey = new GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -70,7 +69,7 @@ class _BaulViewState extends State<BaulView> {
           );
           if (answers[element.pregunta].length > 0) {
             ResponseError response = await sendRespondGratitud(respondGratitud);
-            if (i == questions.length - 1 || response.error) {
+            if (i == 0 || response.error) {
               if (!response.error) {
                 showSnackBar(
                   context,
@@ -97,6 +96,19 @@ class _BaulViewState extends State<BaulView> {
     }
 
     void onEndPractice() async {
+      for (var i = 0; i < questions.length; i++) {
+        PracticaGratitud element = questions[i];
+        if (answers[element.pregunta].split(' ').length < 2 ||
+            answers[element.pregunta].length == 0) {
+          showSnackBar(
+            context,
+            content: Text('Cada respuesta debe contener al menos dos palabras'),
+            color: Colors.red,
+          );
+          return;
+        }
+      }
+
       showAlert(context,
           title: 'Antes de continuar...',
           content: Container(

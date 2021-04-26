@@ -1,4 +1,5 @@
 import 'package:cuts/views/container/container.view.dart';
+import 'package:cuts/views/loading/loading.view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ void main() => initializeDateFormatting().then((value) => runApp(MultiProvider(
         debugShowCheckedModeBanner: false,
         initialRoute: "/",
         routes: {
-          "/": (context) => WelcomeView(),
+          "/": (context) => LoadingView(),
           "/home": (context) => ContainerView(),
         },
         theme: ThemeData(

@@ -125,6 +125,7 @@ class SettingsView extends StatelessWidget {
                 text: 'Cerrar sesión',
                 color: Colors.blueGrey,
                 onPressed: () {
+                  deletePrefs(key: SecureKeys.userId.value);
                   replaceView(context, view: WelcomeView());
                 },
               ),

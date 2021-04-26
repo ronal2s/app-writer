@@ -153,7 +153,7 @@ class _RecordViewState extends State<RecordView> {
         padding: EdgeInsets.all(DEFAULT_PADDING),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.start,
             children: [
               loading ? CircularProgressIndicator() : SizedBox(),
               SizedBox(height: DEFAULT_SPACE),
@@ -218,7 +218,7 @@ class _RecordViewState extends State<RecordView> {
                 'Emociones de ${filterType.toLowerCase()}',
                 color: PRIMARY_COLOR,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 18,
               ),
               graphsAll.length > 0
                   ? SizedBox(
@@ -241,19 +241,31 @@ class _RecordViewState extends State<RecordView> {
                       ],
                     ),
               SizedBox(height: DEFAULT_SPACE),
+              MyText(
+                'Información detallada',
+                fontSize: 18,
+                color: PRIMARY_COLOR,
+                fontWeight: FontWeight.bold,
+              ),
+              SizedBox(height: DEFAULT_SPACE),
               ...graphsAll.map(
-                (e) => Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    MyText(
-                      '${toCapitalize(e.emocion)} ${e.porciento}%',
-                      color: PRIMARY_COLOR,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      // textAlign: TextAlign.start,
-                    ),
-                    SizedBox(height: DEFAULT_SPACE),
-                  ],
+                (e) => Container(
+                  width: size.width,
+                  padding: EdgeInsets.symmetric(horizontal: DEFAULT_PADDING),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MyText(
+                        '${toCapitalize(e.emocion)} ${e.porciento}%',
+                        color: PRIMARY_COLOR,
+                        fontSize: 16,
+                        // fontWeight: FontWeight.bold,
+                        // textAlign: TextAlign.start,
+                      ),
+                      SizedBox(height: DEFAULT_SPACE),
+                    ],
+                  ),
                 ),
               ),
             ],
